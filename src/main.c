@@ -6,13 +6,13 @@ int main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	init_shell(&shell, envp);
+	run_shell(&shell);
 	int i = 0;
 	while (envp[i])
 	{
 		printf("%s\n", envp[i]);
 		i++;
 	}
-	init_shell(&shell, envp);
-	run_shell(&shell);
 	return (shell.last_exit_status);
 }
