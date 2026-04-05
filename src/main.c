@@ -24,10 +24,11 @@ int main(int argc, char **argv, char **envp)
 	run_shell(&shell);
 	int i = 0;
 	get_path_from_envp(envp);
-	while (envp[i])
+	/*while (envp[i])
 	{
 		printf("%s\n", envp[i]);
 		i++;
 	}
+		*/
 	return (shell.last_exit_status);
 }
