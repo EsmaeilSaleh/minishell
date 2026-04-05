@@ -6,10 +6,10 @@ static void sigint_handler(int signum)
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	rl_redisplay();
+	// rl_redisplay();
 }
 
-void	setup_signals(void)
+void setup_signals(void)
 {
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
