@@ -22,9 +22,10 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	init_shell(&shell, envp);
 	run_shell(&shell);
-	int i = 0;
 	get_path_from_envp(envp);
-	/*while (envp[i])
+	/*
+	int i = 0;
+	while (envp[i])
 	{
 		printf("%s\n", envp[i]);
 		i++;
