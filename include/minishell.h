@@ -46,6 +46,6 @@ int is_space(char c);
 int is_operator_char(char c);
 char *extract_word(char *line, int *i);
 
-char ft_substr(const char *s, unsigned int start, int len);
+char *ft_substr(const char *s, unsigned int start, int len);
 
 #endif
