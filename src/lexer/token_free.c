@@ -8,7 +8,6 @@ void free_tokens(t_token *tokens)
     {
         next = tokens->next;
         free(tokens->value);
-        free(tokens->type);
         free(tokens);
         tokens = next;
     }
