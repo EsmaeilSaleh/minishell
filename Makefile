@@ -14,7 +14,8 @@ SRCS = src/main.c \
 	   src/lexer/token_create.c \
 	   src/lexer/token_free.c \
 	   src/lexer/token_list.c \
-	   src/lexer/token_print.c
+	   src/lexer/token_print.c \
+	   src/utils/strings.c
 
 OBJS = $(SRCS:.c=.o)
 
