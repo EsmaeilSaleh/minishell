@@ -8,7 +8,13 @@ LIBS = -lreadline
 SRCS = src/main.c \
        src/run_shell.c \
        src/init/init_shell.c \
-       src/signals/signals.c
+       src/signals/signals.c \
+	   src/lexer/lexer_utils.c \
+	   src/lexer/lexer.c \
+	   src/lexer/token_create.c \
+	   src/lexer/token_free.c \
+	   src/lexer/token_list.c \
+	   src/lexer/token_print.c
 
 OBJS = $(SRCS:.c=.o)
 

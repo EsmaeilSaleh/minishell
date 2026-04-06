@@ -1,16 +1,20 @@
 #include "minishell.h"
 
-static void	handle_input(t_shell *shell, char *line)
+static void handle_input(t_shell *shell, char *line)
 {
+	t_token *tokens;
+
 	if (*line != '\0')
 		add_history(line);
-	printf("You entered: %s\n", line);
+	tokens = lexer(line);
+	print_tokens(tokens);
+	free_tokens(tokens);
 	shell->last_exit_status = 0;
 }
 
-void	run_shell(t_shell *shell)
+void run_shell(t_shell *shell)
 {
-	char	*line;
+	char *line;
 
 	setup_signals();
 	while (shell->running)
