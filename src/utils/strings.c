@@ -36,7 +36,7 @@ char *ft_strdup(char *s)
     return (ft_strcpy(copy, s));
 }
 
-char *ft_substr(const char *s, unsigned int start, int len)
+char *ft_substr(const char *s, int start, int len)
 {
     char *substr;
     int i;

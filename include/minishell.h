@@ -32,7 +32,7 @@ typedef struct s_token
 	struct s_token *next;
 } t_token;
 
-char *ft_substr(const char *s, unsigned int start, int len);
+char *ft_substr(const char *s, int start, int len);
 char *ft_strdup(char *s);
 void init_shell(t_shell *shell, char **envp);
 void run_shell(t_shell *shell);
