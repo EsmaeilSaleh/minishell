@@ -32,6 +32,8 @@ typedef struct s_token
 	struct s_token *next;
 } t_token;
 
+char *ft_substr(const char *s, unsigned int start, int len);
+char *ft_strdup(char *s);
 void init_shell(t_shell *shell, char **envp);
 void run_shell(t_shell *shell);
 void setup_signals(void);
@@ -45,8 +47,5 @@ void add_token_back(t_token **list, t_token *new_node);
 int is_space(char c);
 int is_operator_char(char c);
 char *extract_word(char *line, int *i);
-
-char *ft_substr(const char *s, unsigned int start, int len);
-char *ft_strdup(char *s);
 
 #endif
