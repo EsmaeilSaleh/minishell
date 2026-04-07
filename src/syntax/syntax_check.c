@@ -42,8 +42,8 @@ int	syntax_check(t_token *token)
 	if (tokens == NULL)
 		return (1);
 	if (!check_pipe_syntax(tokens))
-		return (0);
+		return (syntax_error());
 	if (!check_redir_syntax(tokens))
-		return (0);
+		return (syntax_error());
 	return (1);
 }
