@@ -7,7 +7,15 @@ static void handle_input(t_shell *shell, char *line)
 	if (*line != '\0')
 		add_history(line);
 	tokens = lexer(line);
+	if (tokens == NULL)
+		return;
 	print_tokens(tokens);
+	if (!syntax_check(tokens))
+	{
+		free_tokens(tokens);
+		shell->last_exit_status = 2;
+		return;
+	}
 	free_tokens(tokens);
 	shell->last_exit_status = 0;
 }

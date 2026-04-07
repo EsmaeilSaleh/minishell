@@ -49,4 +49,9 @@ int is_space(char c);
 int is_operator_char(char c);
 char *extract_word(char *line, int *i);
 
+int is_pipe_token(t_token *token);
+int is_redir_token(t_token *token);
+int syntax_check(t_token *token);
+int syntax_error(void);
+
 #endif
