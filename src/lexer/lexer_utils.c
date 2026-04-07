@@ -15,7 +15,7 @@ char *extract_word(char *line, int *i)
     int start;
 
     start = *i;
-    while (line[*i] && !is_space(line[*i] && !is_operator_char(line[*i])))
+    while (line[*i] && !is_space(line[*i]) && !is_operator_char(line[*i]))
         i++;
     return (ft_substr(line, start, *i - start));
 }
