@@ -23,7 +23,18 @@ static int	check_pipe_syntax(t_token *tokens)
 
 static int	check_redir_syntax(t_token *tokens)
 {
-
+	while (tokens)
+	{
+		if (is_redir_token(tokens))
+		{
+			if (tokens->next == NULL)
+				return (0);
+			if (tokens->next->type != TOK_WORD)
+				return (0);
+		}
+		tokens = tokens->next;
+	}
+	return (1);
 }
 
 int	syntax_check(t_token *token)
