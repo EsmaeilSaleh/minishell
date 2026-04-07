@@ -42,6 +42,7 @@ char *ft_substr(const char *s, int start, int len)
     int i;
     int s_len;
 
+    i = 0;
     if (!s)
         return (NULL);
     s_len = ft_strlen(s);
