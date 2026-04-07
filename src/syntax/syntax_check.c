@@ -39,5 +39,11 @@ static int	check_redir_syntax(t_token *tokens)
 
 int	syntax_check(t_token *token)
 {
-
+	if (tokens == NULL)
+		return (1);
+	if (!check_pipe_syntax(tokens))
+		return (0);
+	if (!check_redir_syntax(tokens))
+		return (0);
+	return (1);
 }
