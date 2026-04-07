@@ -12,7 +12,7 @@ int ft_strlen(const char *s)
     return (i);
 }
 
-char *ft_strcpy(char *dst, char *src)
+char *ft_strcpy(char *dst, const char *src)
 {
     int i;
 
@@ -26,7 +26,7 @@ char *ft_strcpy(char *dst, char *src)
     return (dst);
 }
 
-char *ft_strdup(char *s)
+char *ft_strdup(const char *s)
 {
     char *copy;
 
