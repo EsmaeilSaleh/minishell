@@ -3,6 +3,7 @@
 static void handle_input(t_shell *shell, char *line)
 {
 	t_token *tokens;
+	t_cmd *cmds;
 
 	if (*line != '\0')
 		add_history(line);

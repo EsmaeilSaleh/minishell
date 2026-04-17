@@ -1,6 +1,26 @@
 #include "minishell.h"
 
-static void free_parial_argv(char **argv, int count)
+int count_cmd_args(t_token *tokens)
+{
+    int count;
+
+    count = 0;
+    while (tokens && tokens->type != TOK_PIPE)
+    {
+        if (is_redir_token(tokens))
+            tokens = tokens->next->next;
+        else if (tokens->type == TOK_WORD)
+        {
+            count++;
+            tokens = tokens->next;
+        }
+        else
+            tokens = tokens->next;
+    }
+    return (count);
+}
+
+static void free_partial_argv(char **argv, int count)
 {
     while (count > 0)
     {
@@ -38,10 +58,10 @@ t_cmd *parse_command(t_token *tokens)
         {
             target = ft_strdup(tokens->next->value);
             if (target == NULL)
-                return (cleenup..);
+                return (parse_cmd_error(argv, i, redirs));
             new_node = new_redir(tokens->type, target);
             if (new_node == NULL)
-                return (cleanup...);
+                return (parse_cmd_error(argv, i, redirs));
             add_redir_back(&redirs, new_node);
             tokens = tokens->next->next;
         }
@@ -49,7 +69,7 @@ t_cmd *parse_command(t_token *tokens)
         {
             argv[i] = ft_strdup(tokens->value);
             if (argv[i] == NULL)
-                return (cleenup...);
+                return (parse_cmd_error(argv, i, redirs));
             i++;
             tokens = tokens->next;
         }
