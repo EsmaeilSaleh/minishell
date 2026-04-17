@@ -80,4 +80,6 @@ void add_cmd_back(t_cmd **list, t_cmd *new_node);
 
 void print_cmds(t_cmd *cmds);
 void free_cmds(t_cmd *cmds);
+void free_split(char **arr);
+void free_redirs(t_redir *redirs);
 #endif

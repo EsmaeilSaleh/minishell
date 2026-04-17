@@ -1,25 +1,5 @@
 #include "minishell.h"
 
-int count_cmd_args(t_token *tokens)
-{
-    int count;
-
-    count = 0;
-    while (tokens && tokens->type != TOK_PIPE)
-    {
-        if (is_redir_token(tokens))
-            tokens = tokens->next->next;
-        else if (tokens->type == TOK_WORD)
-        {
-            count++;
-            tokens = tokens->next;
-        }
-        else
-            tokens = tokens->next;
-    }
-    return (count);
-}
-
 t_cmd *parser(t_token *tokens)
 {
     t_cmd *cmds;
