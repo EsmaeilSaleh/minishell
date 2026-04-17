@@ -75,11 +75,11 @@ int count_cmd_args(t_token *tokens);
 t_redir *new_redir(t_token_type type, char *target);
 void add_redir_back(t_redir **list, t_redir *new_node);
 
+void free_cmds(t_cmd *cmds);
+void free_split(char **arr);
+void free_redirs(t_redir *redirs);
 t_cmd *new_cmd(char **argv, t_redir *redirs);
 void add_cmd_back(t_cmd **list, t_cmd *new_node);
 
 void print_cmds(t_cmd *cmds);
-void free_cmds(t_cmd *cmds);
-void free_split(char **arr);
-void free_redirs(t_redir *redirs);
 #endif
