@@ -27,3 +27,17 @@ void free_redirs(t_redir *redirs)
         redirs = next;
     }
 }
+
+void free_cmds(t_cmd *cmds)
+{
+    t_cmd *next;
+
+    while (cmds)
+    {
+        next = cmds->next;
+        free_split(cmds->argv);
+        free_redirs(cmds->redirs);
+        free(cmds);
+        cmds = next;
+    }
+}
