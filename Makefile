@@ -17,7 +17,13 @@ SRCS = src/main.c \
 	   src/lexer/token_print.c \
 	   src/utils/strings.c \
 	   src/syntax/syntax_check.c \
-	   src/syntax/syntax_utils.c
+	   src/syntax/syntax_utils.c \
+	   src/parser/cmd_free.c \
+	   src/parser/cmd_list.c \
+	   src/parser/cmd_print.c \
+	   src/parser/parse_cmd.c \
+	   src/parser/parse_redir.c \
+	   src/parser/parser.c
 
 OBJS = $(SRCS:.c=.o)
 

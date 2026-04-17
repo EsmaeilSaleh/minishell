@@ -16,7 +16,15 @@ static void handle_input(t_shell *shell, char *line)
 		shell->last_exit_status = 2;
 		return;
 	}
+	cmds = parser(tokens);
+	if (cmds == NULL)
+	{
+		free_tokens(tokens);
+		return;
+	}
+	print_cmds(cmds);
 	free_tokens(tokens);
+	free_cmds(cmds);
 	shell->last_exit_status = 0;
 }
 

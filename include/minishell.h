@@ -32,6 +32,20 @@ typedef struct s_token
 	struct s_token *next;
 } t_token;
 
+typedef struct s_redir
+{
+	t_token_type type;
+	char *target;
+	struct s_redir *next;
+} t_redir;
+
+typedef struct s_cmd
+{
+	char **argv;
+	t_redir *redirs;
+	struct s_cmd *next;
+} t_cmd;
+
 char *ft_substr(const char *s, int start, int len);
 char *ft_strdup(const char *s);
 
@@ -54,4 +68,16 @@ int is_redir_token(t_token *token);
 int syntax_check(t_token *token);
 int syntax_error(void);
 
+t_cmd *parser(t_token *token);
+t_cmd *parse_command(t_token *tokens);
+int count_cmd_args(t_token *tokens);
+
+t_redir *new_redir(t_token_type type, char *target);
+void add_redir_back(t_redir **list, t_redir *new_node);
+
+t_cmd *new_cmd(char **argv, t_redir *redirs);
+void add_cmd_back(t_cmd **list, t_cmd *new_node);
+
+void print_cmds(t_cmd *cmds);
+void free_cmds(t_cmd *cmds);
 #endif
