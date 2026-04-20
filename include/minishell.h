@@ -49,6 +49,7 @@ typedef struct s_cmd
 
 char *ft_substr(const char *s, int start, int len);
 char *ft_strdup(const char *s);
+int ft_strlen(const char *s);
 
 void init_shell(t_shell *shell, char **envp);
 void run_shell(t_shell *shell);
