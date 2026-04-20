@@ -24,6 +24,7 @@ static void handle_input(t_shell *shell, char *line)
 		return;
 	}
 	print_cmds(cmds);
+	execute_cmds(cmds, shell);
 	free_tokens(tokens);
 	free_cmds(cmds);
 	shell->last_exit_status = 0;

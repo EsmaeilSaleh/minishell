@@ -80,6 +80,12 @@ void free_split(char **arr);
 void free_redirs(t_redir *redirs);
 t_cmd *new_cmd(char **argv, t_redir *redirs);
 void add_cmd_back(t_cmd **list, t_cmd *new_node);
-
 void print_cmds(t_cmd *cmds);
+
+int execute_cmds(t_cmd *cmds, t_shell *shell);
+int execute_single(t_cmd *cmd, t_shell *shell);
+char *resolve_command_path(char *cmd_name, char **envp);
+int ft_strncmp(const char *s1, const char *s2, size_t n);
+
+int is_builtiin(char *cmd_name);
 #endif
