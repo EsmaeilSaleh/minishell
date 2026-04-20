@@ -23,7 +23,10 @@ SRCS = src/main.c \
 	   src/parser/cmd_print.c \
 	   src/parser/parse_cmd.c \
 	   src/parser/parse_redir.c \
-	   src/parser/parser.c
+	   src/parser/parser.c \
+	   src/exec/execute.c \
+	   src/exec/execute_single.c \
+	   src/exec/path_resolve.c \
 
 OBJS = $(SRCS:.c=.o)
 
