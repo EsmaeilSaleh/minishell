@@ -83,6 +83,8 @@ t_cmd *new_cmd(char **argv, t_redir *redirs);
 void add_cmd_back(t_cmd **list, t_cmd *new_node);
 void print_cmds(t_cmd *cmds);
 
+char *get_env_value(char **envp, const char *name);
+
 int execute_cmds(t_cmd *cmds, t_shell *shell);
 int execute_single(t_cmd *cmd, t_shell *shell);
 char *resolve_command_path(char *cmd_name, char **envp);

@@ -16,6 +16,7 @@ SRCS = src/main.c \
 	   src/lexer/token_list.c \
 	   src/lexer/token_print.c \
 	   src/utils/strings.c \
+	   src/utils/join_split_str.c \
 	   src/syntax/syntax_check.c \
 	   src/syntax/syntax_utils.c \
 	   src/parser/cmd_free.c \
