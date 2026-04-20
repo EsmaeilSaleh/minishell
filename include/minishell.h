@@ -87,6 +87,8 @@ int execute_cmds(t_cmd *cmds, t_shell *shell);
 int execute_single(t_cmd *cmd, t_shell *shell);
 char *resolve_command_path(char *cmd_name, char **envp);
 int ft_strncmp(const char *s1, const char *s2, size_t n);
+char *ft_join_path(char *dir, char *cmd);
+char **ft_split(const char *s, char c);
 
 int is_builtiin(char *cmd_name);
 #endif
