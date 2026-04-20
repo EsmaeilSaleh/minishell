@@ -28,6 +28,14 @@ SRCS = src/main.c \
 	   src/exec/execute.c \
 	   src/exec/execute_single.c \
 	   src/exec/path_resolve.c \
+	   src/builtins/builtins.c \
+	   src/builtins/cd.c \
+	   src/builtins/echo.c \
+	   src/builtins/env.c \
+	   src/builtins/exit.c \
+	   src/builtins/export.c \
+	   src/builtins/pwd.c \
+	   src/builtins/unset.c \
 
 OBJS = $(SRCS:.c=.o)
 

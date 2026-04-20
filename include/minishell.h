@@ -50,6 +50,7 @@ typedef struct s_cmd
 char *ft_substr(const char *s, int start, int len);
 char *ft_strdup(const char *s);
 int ft_strlen(const char *s);
+int ft_strcmp(const char *s1, const char *s2);
 
 void init_shell(t_shell *shell, char **envp);
 void run_shell(t_shell *shell);
@@ -93,5 +94,15 @@ int ft_strncmp(const char *s1, const char *s2, size_t n);
 char *ft_join_path(char *dir, char *cmd);
 char **ft_split(const char *s, char c);
 
-int is_builtiin(char *cmd_name);
+int is_builtin(char *cmd_name);
+int exec_builtin(t_cmd *cmd, t_shell *shell);
+int is_state_builtin(char *cmd_namd);
+
+int ft_echo(char **argv);
+int ft_cd(char **argv, t_shell *shell);
+int ft_pwd(void);
+int ft_env(char **envp);
+int ft_export(char **argv, t_shell *shell);
+int ft_unset(char **argv, t_shell *shell);
+int ft_exit(char **argv, t_shell *shell);
 #endif

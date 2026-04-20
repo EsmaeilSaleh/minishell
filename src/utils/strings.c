@@ -1,4 +1,5 @@
 #include "minishell.h"
+
 int ft_strlen(const char *s)
 {
     int i;
@@ -60,4 +61,16 @@ char *ft_substr(const char *s, int start, int len)
     }
     substr[i] = '\0';
     return (substr);
+}
+
+int ft_strcmp(const char *s1, const char *s2)
+{
+    while (*s1 || *s2)
+    {
+        if ((unsigned char)*s1 != (unsigned char)*s2)
+            return ((unsigned char)*s1 - (unsigned char)*s2);
+        s1++;
+        s2++;
+    }
+    return (0);
 }
