@@ -27,7 +27,7 @@ static void handle_input(t_shell *shell, char *line)
 	execute_cmds(cmds, shell);
 	free_tokens(tokens);
 	free_cmds(cmds);
-	shell->last_exit_status = 0;
+	// shell->last_exit_status = 0;
 }
 
 void run_shell(t_shell *shell)
