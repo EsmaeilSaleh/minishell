@@ -98,9 +98,6 @@ char **ft_split(const char *s, char c);
 int is_builtin(char *cmd_name);
 int exec_builtin(t_cmd *cmd, t_shell *shell);
 int is_state_builtin(char *cmd_name);
-static int find_equal_sign(char *arg);
-static int env_find_index(char **envp, char *key);
-static char **env_add_or_replace(char **envp, char *new_entry, char *key);
 
 int ft_echo(char **argv);
 int ft_cd(char **argv, t_shell *shell);
