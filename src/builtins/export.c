@@ -14,7 +14,7 @@ static int find_equal_sign(char *arg)
     return (-1);
 }
 
-static int env_find_index(char **envp, char *key)
+int env_find_index(char **envp, char *key)
 {
     int i;
     int key_len;
