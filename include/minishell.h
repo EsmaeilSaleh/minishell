@@ -98,6 +98,7 @@ char **ft_split(const char *s, char c);
 int is_builtin(char *cmd_name);
 int exec_builtin(t_cmd *cmd, t_shell *shell);
 int is_state_builtin(char *cmd_name);
+int env_count(char **envp);
 
 int ft_echo(char **argv);
 int ft_cd(char **argv, t_shell *shell);
