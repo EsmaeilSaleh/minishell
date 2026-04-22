@@ -36,6 +36,6 @@ int exec_builtin(t_cmd *cmd, t_shell *shell)
     if (ft_strcmp(cmd->argv[0], "export") == 0)
         return (ft_export(cmd->argv, shell));
     if (ft_strcmp(cmd->argv[0], "unset") == 0)
-        return (0);
+        return (ft_unset(cmd->argv, shell));
     return (1);
 }
