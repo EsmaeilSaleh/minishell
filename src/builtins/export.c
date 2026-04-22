@@ -30,7 +30,7 @@ static int env_find_index(char **envp, char *key)
     return (-1);
 }
 
-static int env_count(char **envp)
+int env_count(char **envp)
 {
     int i;
 
