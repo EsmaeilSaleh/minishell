@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int **env_remove_key(char **envp, char *key)
+static char **env_remove_key(char **envp, char *key)
 {
     char **new_env;
     int index;
