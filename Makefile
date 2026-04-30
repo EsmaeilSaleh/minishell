@@ -28,6 +28,7 @@ SRCS = src/main.c \
 	   src/exec/execute.c \
 	   src/exec/execute_single.c \
 	   src/exec/path_resolve.c \
+	   src/exec/redir_apply.c \
 	   src/builtins/builtins.c \
 	   src/builtins/cd.c \
 	   src/builtins/echo.c \
