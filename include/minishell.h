@@ -8,6 +8,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 
 typedef struct s_shell
 {
@@ -108,4 +109,7 @@ int ft_env(char **envp);
 int ft_export(char **argv, t_shell *shell);
 int ft_unset(char **argv, t_shell *shell);
 int ft_exit(char **argv, t_shell *shell);
+
+int apply_redirs(t_redir *redirs);
+void restore_stdio(int stdin_backup, int stdout_backup);
 #endif

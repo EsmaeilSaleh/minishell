@@ -5,12 +5,23 @@ int execute_single(t_cmd *cmd, t_shell *shell)
     char *path;
     pid_t pid;
     int status;
+    int stdin_backup;
+    int stdout_backup;
 
     if (cmd == NULL || cmd->argv == NULL || cmd->argv[0] == NULL)
         return (0);
     if (is_builtin(cmd->argv[0]))
     {
+        stdin_backup = dup(STDIN_FILENO);
+        stdout_backup = dup(STDOUT_FILENO);
+        if (apply_redirs(cmd->redirs) != 0)
+        {
+            restore_stdio(stdin_backup, stdout_backup);
+            shell->last_exit_status = 1;
+            return (1);
+        }
         shell->last_exit_status = exec_builtin(cmd, shell);
+        restore_stdio(stdin_backup, stdout_backup);
         return (shell->last_exit_status);
     }
     path = resolve_command_path(cmd->argv[0], shell->envp);
@@ -23,6 +34,8 @@ int execute_single(t_cmd *cmd, t_shell *shell)
     pid = fork();
     if (pid == 0)
     {
+        if (apply_redirs(cmd->redirs) != 0)
+            exit(1);
         execve(path, cmd->argv, shell->envp);
         perror("execve");
         exit(126);
