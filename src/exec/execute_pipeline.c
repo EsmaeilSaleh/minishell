@@ -36,7 +36,7 @@ int execute_pipeline(t_cmd *cmds, t_shell *shell)
             last_pid = pid;
         current = current->next;
     }
-    if (prev_fd = -1)
+    if (prev_fd == -1)
         close(prev_fd);
     while (cmd_count > 0)
     {

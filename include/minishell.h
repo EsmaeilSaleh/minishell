@@ -114,5 +114,5 @@ int apply_redirs(t_redir *redirs);
 void restore_stdio(int stdin_backup, int stdout_backup);
 
 int execute_pipeline(t_cmd *cmds, t_shell *shell);
-
+void exec_child_process(t_cmd *cmd, t_shell *shell, int prev_fd, int pipefd[2], int has_next);
 #endif
