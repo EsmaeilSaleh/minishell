@@ -113,4 +113,6 @@ int ft_exit(char **argv, t_shell *shell);
 int apply_redirs(t_redir *redirs);
 void restore_stdio(int stdin_backup, int stdout_backup);
 
+int execute_pipeline(t_cmd *cmds, t_shell *shell);
+
 #endif

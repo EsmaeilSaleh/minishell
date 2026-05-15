@@ -25,9 +25,12 @@ SRCS = src/main.c \
 	   src/parser/parse_cmd.c \
 	   src/parser/parse_redir.c \
 	   src/parser/parser.c \
+	   src/exec/exec_child.c \
+	   src/exec/execute_pipeline.c \
 	   src/exec/execute.c \
 	   src/exec/execute_single.c \
 	   src/exec/path_resolve.c \
+	   src/exec/pipe_utils.c \
 	   src/exec/redir_apply.c \
 	   src/builtins/builtins.c \
 	   src/builtins/cd.c \
