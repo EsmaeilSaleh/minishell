@@ -24,6 +24,7 @@ static void handle_input(t_shell *shell, char *line)
 		return;
 	}
 	print_cmds(cmds);
+	expand_cmds(cmds, shell);
 	execute_cmds(cmds, shell);
 	free_tokens(tokens);
 	free_cmds(cmds);
