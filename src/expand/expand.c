@@ -34,10 +34,27 @@ static char *append_str(char *result, char *to_add)
 
 char *expand_one_word(char *word, t_shell *shell)
 {
+    char *result;
+    char tmp[2];
+    int i;
+
     (void)shell;
     if (word == NULL)
         return (NULL);
-    return (ft_strdup(word));
+    result = ft_strdup("");
+    if (result == NULL)
+        return (NULL);
+    i = 0;
+    while (word[i])
+    {
+        tmp[0] = word[i];
+        tmp[1] = '\0';
+        result = append_str(result, tmp);
+        if (result == NULL)
+            return (NULL);
+        i++;
+    }
+    return (result);
 }
 
 static void expand_argv(char **argv, t_shell *shell)
