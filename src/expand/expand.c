@@ -16,6 +16,7 @@ static char *append_str(char *result, char *to_add)
     if (!new_str)
         return (NULL);
     i = 0;
+    j = 0;
     while (result[i])
     {
         new_str[i] = result[i];
