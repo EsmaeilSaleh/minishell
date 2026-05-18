@@ -33,13 +33,56 @@ static char *append_str(char *result, char *to_add)
     return (new_str);
 }
 
+static int is_var_char(char c)
+{
+    return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_');
+}
+
+static char *status_to_str(int status)
+{
+    char *str;
+
+    str = ft_itoa(status);
+    return (str);
+}
+
+static char *expand_dollar(char *word, int *i, t_shell *shell)
+{
+    int start;
+    char *name;
+    char *value;
+
+    if (word[*i + 1] == '?')
+    {
+        *i += 2;
+        return (status_to_str(shell->last_exit_status));
+    }
+    start = *i + 1;
+    while (word[start] && is_var_char(word[start]))
+        start++;
+    if (start == *i + 1)
+    {
+        (*i)++;
+        return (ft_strdup("$"));
+    }
+    name = ft_substr(word, *i + 1, start - (*i + 1));
+    if (name == NULL)
+        return (NULL);
+    value = get_env_value(shell->envp, name);
+    free(name);
+    *i = start;
+    if (value == NULL)
+        return (ft_strdup(""));
+    return (ft_strdup(value));
+}
+
 char *expand_one_word(char *word, t_shell *shell)
 {
     char *result;
+    char *piece;
     char tmp[2];
     int i;
 
-    (void)shell;
     if (word == NULL)
         return (NULL);
     result = ft_strdup("");
@@ -48,12 +91,24 @@ char *expand_one_word(char *word, t_shell *shell)
     i = 0;
     while (word[i])
     {
-        tmp[0] = word[i];
-        tmp[1] = '\0';
-        result = append_str(result, tmp);
+        if (word[i] == '$')
+            piece = expand_dollar(word, &i, shell);
+        else
+        {
+            tmp[0] = word[i];
+            tmp[1] = '\0';
+            piece = ft_strdup(tmp);
+            i++;
+        }
+        if (piece == NULL)
+        {
+            free(result);
+            return (NULL);
+        }
+        result = append_str(result, piece);
+        free(piece);
         if (result == NULL)
             return (NULL);
-        i++;
     }
     return (result);
 }
