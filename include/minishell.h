@@ -53,6 +53,7 @@ char *ft_strdup(const char *s);
 int ft_strlen(const char *s);
 int ft_strcmp(const char *s1, const char *s2);
 int ft_atoi(const char *s);
+char *ft_itoa(int n);
 
 void init_shell(t_shell *shell, char **envp);
 void run_shell(t_shell *shell);
