@@ -76,6 +76,20 @@ static char *expand_dollar(char *word, int *i, t_shell *shell)
     return (ft_strdup(value));
 }
 
+static char *copy_single_quoted(char *word, int *i)
+{
+    char *piece;
+    int start;
+
+    (*i)++;
+    start = *i;
+    while (word[*i] && word[*i] != '\'')
+        (*i)++;
+    piece = ft_substr(word, start, *i - start);
+    if (word[*i] == '\'')
+        (*i)++;
+    return (piece);
+}
 static char *copy_double_quoted(char *word, int *i, t_shell *shell)
 {
     char *result;
