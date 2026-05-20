@@ -76,6 +76,42 @@ static char *expand_dollar(char *word, int *i, t_shell *shell)
     return (ft_strdup(value));
 }
 
+static char *copy_double_quoted(char *word, int *i, t_shell *shell)
+{
+    char *result;
+    char *piece;
+    char tmp[2];
+
+    result = ft_strdup("");
+    if (result == NULL)
+        return (NULL);
+    (*i)++;
+    while (word[*i] && word[*i] != '"')
+    {
+        if (word[*i] == '$')
+            piece = expand_dollar(word, i, shell);
+        else
+        {
+            tmp[0] = word[*i];
+            tmp[1] = '\0';
+            piece = ft_strdup(tmp);
+            (*i)++;
+        }
+        if (piece == NULL)
+        {
+            free(result);
+            return (NULL);
+        }
+        result = append_str(result, piece);
+        free(piece);
+        if (result == NULL)
+            return (NULL);
+    }
+    if (word[*i] == '"')
+        (*i)++;
+    return (result);
+}
+
 char *expand_one_word(char *word, t_shell *shell)
 {
     char *result;
@@ -91,7 +127,12 @@ char *expand_one_word(char *word, t_shell *shell)
     i = 0;
     while (word[i])
     {
-        if (word[i] == '$')
+        if (word[i] == '\'')
+
+            piece = copy_single_quoted(word, &i);
+        else if (word[i] == '"')
+            piece = copy_double_quoted(word, &i, shell);
+        else if (word[i] == '$')
             piece = expand_dollar(word, &i, shell);
         else
         {
