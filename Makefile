@@ -40,7 +40,8 @@ SRCS = src/main.c \
 	   src/builtins/export.c \
 	   src/builtins/pwd.c \
 	   src/builtins/unset.c \
-	   src/expand/expand.c
+	   src/expand/expand.c\
+	   src/heredoc/heredoc.c
 
 OBJS = $(SRCS:.c=.o)
 
