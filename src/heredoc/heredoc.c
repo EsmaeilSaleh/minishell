@@ -24,3 +24,25 @@ int prepare_heredoc(char *delimiter)
     close(pipefd[1]);
     return (pipefd[0]);
 }
+
+int prepare_heredocs(t_cmd *cmds)
+{
+    t_redir *redir;
+
+    while (cmds)
+    {
+        redir = cmds->redirs;
+        while (redir)
+        {
+            if (redir->type == TOK_HEREDOC)
+            {
+                redir->heredoc_fd = prepare_heredoc(redir->target);
+                if (redir->heredoc_fd < 0)
+                    return (1);
+            }
+            redir = redir->next;
+        }
+        cmds = cmds->next;
+    }
+    return (0);
+}

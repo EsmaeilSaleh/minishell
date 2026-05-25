@@ -17,7 +17,7 @@ static int open_redir_file(t_redir *redir)
     if (redir->type == TOK_APPEND)
         return (open(redir->target, O_WRONLY | O_CREAT | O_APPEND, 0644));
     if (redir->type == TOK_HEREDOC)
-        return (prepare_heredoc(redir->target));
+        return (redir->heredoc_fd);
     return (-1);
 }
 
@@ -46,6 +46,8 @@ int apply_redirs(t_redir *redirs)
             return (1);
         }
         close(fd);
+        if (redirs->type == TOK_HEREDOC)
+            redirs->heredoc_fd = -1;
         redirs = redirs->next;
     }
     return (0);
