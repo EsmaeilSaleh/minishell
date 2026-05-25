@@ -121,4 +121,5 @@ void expand_cmds(t_cmd *cmds, t_shell *shell);
 char *expand_one_word(char *word, t_shell *shell);
 
 int prepare_heredoc(char *delimiter);
+int heredoc_fd;
 #endif
