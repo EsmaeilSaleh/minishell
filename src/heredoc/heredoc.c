@@ -12,6 +12,17 @@ int prepare_heredoc(char *delimiter)
         line = readline("> ");
         if (line == NULL)
             break;
+        if (g_signal_status == SIGINT)
+
+        {
+
+            if (line)
+                free(line);
+            close(pipefd[0]);
+            close(pipefd[1]);
+            setup_signals();
+            return (-1);
+        }
         if (ft_strcmp(line, delimiter) == 0)
         {
             free(line);

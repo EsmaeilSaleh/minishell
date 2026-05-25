@@ -123,4 +123,5 @@ char *expand_one_word(char *word, t_shell *shell);
 
 int prepare_heredocs(t_cmd *cmds);
 int prepare_heredoc(char *delimiter);
+volatile sig_atomic_t g_signal_status;
 #endif
