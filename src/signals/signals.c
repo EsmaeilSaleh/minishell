@@ -18,7 +18,7 @@ void setup_signals(void)
 */
 volatile sig_atomic_t g_signal_status = 0;
 
-static void sigint_handler(int signum)
+void sigint_handler(int signum)
 {
 	(void)signum;
 	g_signal_status = SIGINT;
