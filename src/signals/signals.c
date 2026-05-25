@@ -16,7 +16,7 @@ void setup_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 */
-// volatile sig_atomic_t g_signal_status = 0;
+volatile sig_atomic_t g_signal_status = 0;
 
 static void sigint_handler(int signum)
 {
