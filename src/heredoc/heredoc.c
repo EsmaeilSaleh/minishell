@@ -4,17 +4,11 @@ static void	heredoc_child_loop(int write_fd, char *delimiter)
 {
 	char	*line;
 
-	setup_heredoc_signals();
+	set_signal_handler(SIGINT, SIG_DFL);
+	set_signal_handler(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("> ");
-		if (g_signal_status == SIGINT)
-		{
-			if (line)
-				free(line);
-			close(write_fd);
-			exit(130);
-		}
 		if (line == NULL)
 			break ;
 		if (ft_strcmp(line, delimiter) == 0)
@@ -40,6 +34,12 @@ static int	wait_heredoc_child(pid_t pid, int pipefd[2])
 	waitpid(pid, &status, 0);
 	setup_signals();
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+	{
+		g_signal_status = SIGINT;
+		close(pipefd[0]);
+		return (-1);
+	}
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
 		g_signal_status = SIGINT;
 		close(pipefd[0]);
