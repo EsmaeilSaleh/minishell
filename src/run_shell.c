@@ -10,7 +10,7 @@ static void handle_input(t_shell *shell, char *line)
 	tokens = lexer(line);
 	if (tokens == NULL)
 		return;
-	print_tokens(tokens);
+	// print_tokens(tokens);
 	if (!syntax_check(tokens))
 	{
 		free_tokens(tokens);
@@ -23,7 +23,7 @@ static void handle_input(t_shell *shell, char *line)
 		free_tokens(tokens);
 		return;
 	}
-	print_cmds(cmds);
+	// print_cmds(cmds);
 	expand_cmds(cmds, shell);
 	execute_cmds(cmds, shell);
 	free_tokens(tokens);
