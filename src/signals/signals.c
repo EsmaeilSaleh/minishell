@@ -40,7 +40,7 @@ void sigint_handler(int signum)
 	rl_redisplay();
 }
 
-static void heredoc_sigint_handler(int signum)
+void heredoc_sigint_handler(int signum)
 {
 	(void)signum;
 	g_signal_status = SIGINT;
