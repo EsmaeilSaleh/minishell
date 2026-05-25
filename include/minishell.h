@@ -38,6 +38,7 @@ typedef struct s_redir
 {
 	t_token_type type;
 	char *target;
+	int heredoc_fd;
 	struct s_redir *next;
 } t_redir;
 
@@ -120,6 +121,5 @@ void exec_child_process(t_cmd *cmd, t_shell *shell, int prev_fd, int pipefd[2], 
 void expand_cmds(t_cmd *cmds, t_shell *shell);
 char *expand_one_word(char *word, t_shell *shell);
 
-int heredoc_fd;
 int prepare_heredoc(char *delimiter);
 #endif
