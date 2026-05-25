@@ -15,6 +15,8 @@ int prepare_heredoc(char *delimiter)
         {
             if (line)
                 free(line);
+            rl_replace_line("", 0);
+            rl_on_new_line();
             close(pipefd[0]);
             close(pipefd[1]);
             setup_signals();
