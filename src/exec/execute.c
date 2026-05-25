@@ -4,7 +4,7 @@ int execute_cmds(t_cmd *cmds, t_shell *shell)
 {
     if (cmds == NULL)
         return (0);
-    if (prepare_heredoc(cmds) != 0)
+    if (prepare_heredocs(cmds) != 0)
     {
         shell->last_exit_status = 1;
         return (1);
