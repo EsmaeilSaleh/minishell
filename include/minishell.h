@@ -129,4 +129,5 @@ int prepare_heredoc(char *delimiter);
 extern volatile sig_atomic_t g_signal_status;
 void setup_heredoc_signals(void);
 void sigint_handler(int signum);
+void heredoc_sigint_handler(int signum);
 #endif

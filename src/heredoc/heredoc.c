@@ -1,65 +1,16 @@
 #include "minishell.h"
-
-int prepare_heredoc(char *delimiter)
+void setup_signals(void)
 {
-    int pipefd[2];
-    char *line;
-
-    if (pipe(pipefd) == -1)
-        return (-1);
+    rl_done = 0;
     g_signal_status = 0;
-    setup_heredoc_signals();
-    while (1)
-    {
-        line = readline("> ");
-        if (g_signal_status == SIGINT)
-        {
-            if (line)
-                free(line);
-            close(pipefd[0]);
-            close(pipefd[1]);
-            setup_signals();
-            g_signal_status = SIGINT;
-            return (-1);
-        }
-        if (line == NULL)
-            break;
-        if (ft_strcmp(line, delimiter) == 0)
-        {
-            free(line);
-            break;
-        }
-        write(pipefd[1], line, ft_strlen(line));
-        write(pipefd[1], "\n", 1);
-        free(line);
-    }
-    close(pipefd[1]);
-    setup_signals();
-    return (pipefd[0]);
+    set_signal_handler(SIGINT, sigint_handler);
+    set_signal_handler(SIGQUIT, SIG_IGN);
 }
 
-int prepare_heredocs(t_cmd *cmds)
+void setup_heredoc_signals(void)
 {
-    t_redir *redir;
-
-    while (cmds)
-    {
-        redir = cmds->redirs;
-        while (redir)
-        {
-            if (redir->type == TOK_HEREDOC)
-            {
-                redir->heredoc_fd = prepare_heredoc(redir->target);
-                if (redir->heredoc_fd < 0)
-                {
-                    if (g_signal_status == SIGINT)
-                        return (130);
-                    return (1);
-                }
-            }
-            redir = redir->next;
-        }
-        cmds = cmds->next;
-    }
-    return (0);
+    rl_done = 0;
+    g_signal_status = 0;
+    set_signal_handler(SIGINT, heredoc_sigint_handler);
+    set_signal_handler(SIGQUIT, SIG_IGN);
 }
