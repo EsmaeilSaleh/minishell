@@ -10,6 +10,10 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 
+extern int	rl_catch_signals;
+extern int	rl_done;
+int			rl_replace_line(const char *text, int clear_undo);
+
 typedef struct s_shell
 {
 	char **envp;
