@@ -19,6 +19,7 @@ int prepare_heredoc(char *delimiter)
             close(pipefd[0]);
             close(pipefd[1]);
             setup_signals();
+            g_signal_status = SIGINT;
             return (-1);
         }
         if (line == NULL)
@@ -50,7 +51,11 @@ int prepare_heredocs(t_cmd *cmds)
             {
                 redir->heredoc_fd = prepare_heredoc(redir->target);
                 if (redir->heredoc_fd < 0)
+                {
+                    if (g_signal_status == SIGINT)
+                        return (130);
                     return (1);
+                }
             }
             redir = redir->next;
         }
