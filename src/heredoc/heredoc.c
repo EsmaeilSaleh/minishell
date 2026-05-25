@@ -4,13 +4,19 @@ static void	heredoc_child_loop(int write_fd, char *delimiter)
 {
 	char	*line;
 
-	set_signal_handler(SIGINT, SIG_DFL);
-	set_signal_handler(SIGQUIT, SIG_IGN);
+	setup_heredoc_signals();
 	while (1)
 	{
 		line = readline("> ");
 		if (line == NULL)
+		{
+			if (g_signal_status == SIGINT)
+			{
+				close(write_fd);
+				exit(130);
+			}
 			break ;
+		}
 		if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
