@@ -14,7 +14,6 @@ extern int rl_catch_signals;
 extern int rl_done;
 #ifndef __linux__
 extern void rl_replace_line(const char *text, int clear_undo);
-extern void rl_cleanup_after_signal(void);
 #endif
 
 typedef struct s_shell
