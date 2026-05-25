@@ -1,42 +1,78 @@
 #include "minishell.h"
 
+static void	heredoc_child_loop(int write_fd, char *delimiter)
+{
+	char	*line;
+
+	setup_heredoc_signals();
+	while (1)
+	{
+		line = readline("> ");
+		if (g_signal_status == SIGINT)
+		{
+			if (line)
+				free(line);
+			close(write_fd);
+			exit(130);
+		}
+		if (line == NULL)
+			break ;
+		if (ft_strcmp(line, delimiter) == 0)
+		{
+			free(line);
+			break ;
+		}
+		write(write_fd, line, ft_strlen(line));
+		write(write_fd, "\n", 1);
+		free(line);
+	}
+	close(write_fd);
+	exit(0);
+}
+
+static int	wait_heredoc_child(pid_t pid, int pipefd[2])
+{
+	int	status;
+
+	close(pipefd[1]);
+	set_signal_handler(SIGINT, SIG_IGN);
+	set_signal_handler(SIGQUIT, SIG_IGN);
+	waitpid(pid, &status, 0);
+	setup_signals();
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+	{
+		g_signal_status = SIGINT;
+		close(pipefd[0]);
+		return (-1);
+	}
+	if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
+	{
+		close(pipefd[0]);
+		return (-1);
+	}
+	return (pipefd[0]);
+}
+
 int prepare_heredoc(char *delimiter)
 {
     int pipefd[2];
-    char *line;
+    pid_t pid;
 
     if (pipe(pipefd) == -1)
         return (-1);
-    setup_heredoc_signals();
-    while (1)
+    pid = fork();
+    if (pid == -1)
     {
-        line = readline("> ");
-        if (g_signal_status == SIGINT)
-        {
-            if (line)
-                free(line);
-            rl_replace_line("", 0);
-            rl_on_new_line();
-            close(pipefd[0]);
-            close(pipefd[1]);
-            setup_signals();
-            g_signal_status = SIGINT;
-            return (-1);
-        }
-        if (line == NULL)
-            break;
-        if (ft_strcmp(line, delimiter) == 0)
-        {
-            free(line);
-            break;
-        }
-        write(pipefd[1], line, ft_strlen(line));
-        write(pipefd[1], "\n", 1);
-        free(line);
+        close(pipefd[0]);
+        close(pipefd[1]);
+        return (-1);
     }
-    close(pipefd[1]);
-    setup_signals();
-    return (pipefd[0]);
+    if (pid == 0)
+    {
+        close(pipefd[0]);
+        heredoc_child_loop(pipefd[1], delimiter);
+    }
+    return (wait_heredoc_child(pid, pipefd));
 }
 
 int prepare_heredocs(t_cmd *cmds)
