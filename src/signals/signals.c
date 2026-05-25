@@ -20,7 +20,7 @@ void setup_signals(void)
 */
 volatile sig_atomic_t g_signal_status = 0;
 
-static void set_signal_handler(int signo, void (*handler)(int))
+void set_signal_handler(int signo, void (*handler)(int))
 {
 	struct sigaction sa;
 
