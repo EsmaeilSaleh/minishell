@@ -36,9 +36,9 @@ void run_shell(t_shell *shell)
 	char *line;
 
 	rl_catch_signals = 0;
-	setup_signals();
 	while (shell->running)
 	{
+		setup_signals();
 		line = readline("minishell$ ");
 		if (line == NULL)
 		{
