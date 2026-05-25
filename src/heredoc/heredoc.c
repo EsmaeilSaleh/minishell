@@ -7,15 +7,13 @@ int prepare_heredoc(char *delimiter)
 
     if (pipe(pipefd) == -1)
         return (-1);
+    g_signal_status = 0;
+    setup_heredoc_signals();
     while (1)
     {
         line = readline("> ");
-        if (line == NULL)
-            break;
         if (g_signal_status == SIGINT)
-
         {
-
             if (line)
                 free(line);
             close(pipefd[0]);
@@ -23,6 +21,8 @@ int prepare_heredoc(char *delimiter)
             setup_signals();
             return (-1);
         }
+        if (line == NULL)
+            break;
         if (ft_strcmp(line, delimiter) == 0)
         {
             free(line);
@@ -33,6 +33,7 @@ int prepare_heredoc(char *delimiter)
         free(line);
     }
     close(pipefd[1]);
+    setup_signals();
     return (pipefd[0]);
 }
 
