@@ -12,6 +12,7 @@ static void	heredoc_child_loop(int write_fd, char *delimiter)
 		{
 			if (g_signal_status == SIGINT)
 			{
+				rl_cleanup_after_signal();
 				close(write_fd);
 				exit(130);
 			}
