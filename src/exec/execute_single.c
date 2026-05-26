@@ -24,7 +24,8 @@ int execute_single(t_cmd *cmd, t_shell *shell)
         shell->last_exit_status = 0;
         return (0);
     }
-    if (is_builtin(cmd->argv[0]))
+    if (is_builtin(cmd->argv[0])
+        && !(ft_strcmp(cmd->argv[0], "env") == 0 && cmd->argv[1] != NULL))
     {
         stdin_backup = dup(STDIN_FILENO);
         stdout_backup = dup(STDOUT_FILENO);

@@ -132,13 +132,35 @@ char *expand_one_word(char *word, t_shell *shell)
     char *piece;
     char tmp[2];
     int i;
+    char *home;
 
     if (word == NULL)
         return (NULL);
-    result = ft_strdup("");
-    if (result == NULL)
-        return (NULL);
-    i = 0;
+    if (word[0] == '~' && (word[1] == '\0' || word[1] == '/'))
+    {
+        home = get_env_value(shell->envp, "HOME");
+        if (home != NULL)
+        {
+            result = ft_strdup(home);
+            if (result == NULL)
+                return (NULL);
+            i = 1;
+        }
+        else
+        {
+            result = ft_strdup("");
+            if (result == NULL)
+                return (NULL);
+            i = 0;
+        }
+    }
+    else
+    {
+        result = ft_strdup("");
+        if (result == NULL)
+            return (NULL);
+        i = 0;
+    }
     while (word[i])
     {
         if (word[i] == '\'')
