@@ -16,6 +16,8 @@ void exec_child_process(t_cmd *cmd, t_shell *shell, int prev_fd, int pipefd[2], 
     }
     if (apply_redirs(cmd->redirs) != 0)
         exit(1);
+    if (cmd->argv == NULL || cmd->argv[0] == NULL)
+        exit(0);
     if (is_builtin(cmd->argv[0]))
         exit(exec_builtin(cmd, shell));
     path = resolve_command_path(cmd->argv[0], shell->envp);

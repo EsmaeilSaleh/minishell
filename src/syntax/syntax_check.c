@@ -12,8 +12,6 @@ static int check_pipe_syntax(t_token *tokens)
                 return (0);
             if (is_pipe_token(tokens->next))
                 return (0);
-            if (is_redir_token(tokens->next))
-                return (0);
         }
         tokens = tokens->next;
     }

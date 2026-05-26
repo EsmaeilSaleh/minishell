@@ -45,6 +45,12 @@ static int handle_operator(t_token **tokens, char *line, int *i)
         type = TOK_APPEND;
         (*i) += 2;
     }
+    else if (line[*i] == '>' && line[*i + 1] == '|')
+    {
+        value = ft_strdup(">");
+        type = TOK_REDIR_OUT;
+        (*i) += 2;
+    }
     else
     {
         value = ft_strdup(">");
