@@ -75,7 +75,7 @@ static void	heredoc_child_loop(int write_fd, char *delimiter,
 		}
 		if (expand_body)
 		{
-			expanded = expand_one_word(line, shell);
+			expanded = expand_heredoc_body_line(line, shell);
 			if (expanded)
 			{
 				write(write_fd, expanded, ft_strlen(expanded));

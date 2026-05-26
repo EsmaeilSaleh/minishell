@@ -128,6 +128,7 @@ void exec_child_process(t_cmd *cmd, t_shell *shell, int prev_fd, int pipefd[2], 
 
 void expand_cmds(t_cmd *cmds, t_shell *shell);
 char *expand_one_word(char *word, t_shell *shell);
+char *expand_heredoc_body_line(char *line, t_shell *shell);
 
 int prepare_heredocs(t_cmd *cmds, t_shell *shell);
 int prepare_heredoc(char *delimiter, int expand_body, t_shell *shell);

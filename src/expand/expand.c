@@ -367,6 +367,68 @@ static void expand_redirs(t_redir *redirs, t_shell *shell)
     }
 }
 
+char	*expand_heredoc_body_line(char *line, t_shell *shell)
+{
+	char	*result;
+	char	*piece;
+	char	tmp[3];
+	int		i;
+
+	if (line == NULL)
+		return (NULL);
+	result = ft_strdup("");
+	if (result == NULL)
+		return (NULL);
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '$')
+			piece = expand_dollar(line, &i, shell);
+		else if (line[i] == '\\')
+		{
+			if (line[i + 1] == '\\' || line[i + 1] == '$' || line[i + 1] == '`')
+			{
+				tmp[0] = line[i + 1];
+				tmp[1] = '\0';
+				piece = ft_strdup(tmp);
+				i += 2;
+			}
+			else if (line[i + 1] != '\0')
+			{
+				tmp[0] = '\\';
+				tmp[1] = line[i + 1];
+				tmp[2] = '\0';
+				piece = ft_strdup(tmp);
+				i += 2;
+			}
+			else
+			{
+				tmp[0] = '\\';
+				tmp[1] = '\0';
+				piece = ft_strdup(tmp);
+				i++;
+			}
+		}
+		else
+		{
+			tmp[0] = line[i];
+			tmp[1] = '\0';
+			piece = ft_strdup(tmp);
+			i++;
+		}
+		if (piece == NULL)
+		{
+			free(result);
+			return (NULL);
+		}
+		result = append_str(result, piece);
+		free(piece);
+		if (result == NULL)
+			return (NULL);
+	}
+	return (result);
+}
+
 void expand_cmds(t_cmd *cmds, t_shell *shell)
 {
     while (cmds)
