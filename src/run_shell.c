@@ -33,16 +33,22 @@ static void handle_input(t_shell *shell, char *line)
 
 void run_shell(t_shell *shell)
 {
-	char *line;
+	char	*line;
+	int		interactive;
 
 	rl_catch_signals = 0;
+	interactive = isatty(STDIN_FILENO) && isatty(STDOUT_FILENO);
 	while (shell->running)
 	{
 		setup_signals();
-		line = readline("minishell$ ");
+		if (interactive)
+			line = readline("minishell$ ");
+		else
+			line = readline("");
 		if (line == NULL)
 		{
-			printf("exit\n");
+			if (interactive)
+				printf("exit\n");
 			break;
 		}
 		handle_input(shell, line);
