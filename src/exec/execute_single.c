@@ -42,7 +42,7 @@ int execute_single(t_cmd *cmd, t_shell *shell)
     path = resolve_command_path(cmd->argv[0], shell->envp);
     if (path == NULL)
     {
-        printf("command not found: %s\n", cmd->argv[0]);
+        fprintf(stderr, "command not found: %s\n", cmd->argv[0]);
         shell->last_exit_status = 127;
         return (127);
     }

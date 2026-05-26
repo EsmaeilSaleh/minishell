@@ -23,7 +23,7 @@ void exec_child_process(t_cmd *cmd, t_shell *shell, int prev_fd, int pipefd[2], 
     path = resolve_command_path(cmd->argv[0], shell->envp);
     if (path == NULL)
     {
-        printf("command not found: %s\n", cmd->argv[0]);
+        fprintf(stderr, "command not found: %s\n", cmd->argv[0]);
         exit(127);
     }
     execve(path, cmd->argv, shell->envp);
