@@ -51,7 +51,7 @@ char *resolve_command_path(char *cmd_name, char **envp)
         return (NULL);
     if (has_slash(cmd_name))
     {
-        if (access(cmd_name, X_OK) == 0)
+        if (access(cmd_name, F_OK) == 0)
             return (ft_strdup(cmd_name));
         return (NULL);
     }

@@ -235,6 +235,54 @@ static char **append_arg(char **argv, int *count, char *value)
     return (new_argv);
 }
 
+static char **split_fields(char *word)
+{
+    char **fields;
+    int count;
+    int i;
+    int start;
+    int field_i;
+
+    count = 0;
+    i = 0;
+    while (word[i])
+    {
+        while (word[i] && is_space(word[i]))
+            i++;
+        if (!word[i])
+            break;
+        count++;
+        while (word[i] && !is_space(word[i]))
+            i++;
+    }
+    fields = malloc(sizeof(char *) * (count + 1));
+    if (fields == NULL)
+        return (NULL);
+    i = 0;
+    field_i = 0;
+    while (word[i])
+    {
+        while (word[i] && is_space(word[i]))
+            i++;
+        if (!word[i])
+            break;
+        start = i;
+        while (word[i] && !is_space(word[i]))
+            i++;
+        fields[field_i] = ft_substr(word, start, i - start);
+        if (fields[field_i] == NULL)
+        {
+            while (field_i > 0)
+                free(fields[--field_i]);
+            free(fields);
+            return (NULL);
+        }
+        field_i++;
+    }
+    fields[field_i] = NULL;
+    return (fields);
+}
+
 static char **expand_argv(char **argv, t_shell *shell)
 {
     int i;
@@ -264,7 +312,7 @@ static char **expand_argv(char **argv, t_shell *shell)
                 free(new_word);
             else if (!has_quotes)
             {
-                split_words = ft_split(new_word, ' ');
+                split_words = split_fields(new_word);
                 if (split_words == NULL)
                     new_argv = append_arg(new_argv, &count, new_word);
                 else
