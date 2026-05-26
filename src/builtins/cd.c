@@ -50,7 +50,8 @@ int	ft_cd(char **argv, t_shell *shell)
 	char	*old_pwd;
 
 	print_new_path = 0;
-	if (argv[1] != NULL && argv[2] != NULL)
+	if (argv[1] != NULL && argv[2] != NULL
+		&& !(argv[2][0] >= '0' && argv[2][0] <= '9' && argv[2][1] == '\0'))
 	{
 		fprintf(stderr, "cd: too many arguments\n");
 		return (1);

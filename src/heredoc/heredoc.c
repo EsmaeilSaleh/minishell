@@ -1,5 +1,56 @@
 #include "minishell.h"
 
+static char	*read_line_fd(int fd)
+{
+	char	*line;
+	char	*tmp;
+	int		len;
+	int		cap;
+	char	c;
+	int		ret;
+	int		i;
+
+	cap = 64;
+	len = 0;
+	line = malloc(cap);
+	if (!line)
+		return (NULL);
+	while (1)
+	{
+		ret = read(fd, &c, 1);
+		if (ret <= 0)
+			break ;
+		if (c == '\n')
+			break ;
+		if (len + 1 >= cap)
+		{
+			cap *= 2;
+			tmp = malloc(cap);
+			if (!tmp)
+			{
+				free(line);
+				return (NULL);
+			}
+			i = 0;
+			while (i < len)
+			{
+				tmp[i] = line[i];
+				i++;
+			}
+			free(line);
+			line = tmp;
+		}
+		line[len++] = c;
+	}
+	if (ret <= 0 && len == 0)
+	{
+		free(line);
+		return (NULL);
+	}
+	line[len] = '\0';
+	return (line);
+}
+
 static void	heredoc_child_loop(int write_fd, char *delimiter,
 	int expand_body, t_shell *shell)
 {
@@ -11,7 +62,10 @@ static void	heredoc_child_loop(int write_fd, char *delimiter,
 	set_signal_handler(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		line = readline(isatty(STDIN_FILENO) ? "> " : NULL);
+		if (isatty(STDIN_FILENO))
+			line = readline("> ");
+		else
+			line = read_line_fd(STDIN_FILENO);
 		if (line == NULL)
 			break ;
 		if (ft_strcmp(line, delimiter) == 0)
