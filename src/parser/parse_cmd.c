@@ -1,5 +1,19 @@
 #include "minishell.h"
 
+static int token_has_quotes(const char *s)
+{
+    int i;
+
+    i = 0;
+    while (s[i])
+    {
+        if (s[i] == '\'' || s[i] == '"')
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
 int count_cmd_args(t_token *tokens)
 {
     int count;
@@ -62,6 +76,8 @@ t_cmd *parse_command(t_token *tokens)
             new_node = new_redir(tokens->type, target);
             if (new_node == NULL)
                 return (parse_cmd_error(argv, i, redirs));
+            if (tokens->type == TOK_HEREDOC)
+                new_node->expand_body = !token_has_quotes(tokens->next->value);
             add_redir_back(&redirs, new_node);
             tokens = tokens->next->next;
         }

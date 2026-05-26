@@ -6,7 +6,7 @@ int execute_cmds(t_cmd *cmds, t_shell *shell)
 
     if (cmds == NULL)
         return (0);
-    status = prepare_heredocs(cmds);
+    status = prepare_heredocs(cmds, shell);
     if (status != 0)
     {
         shell->last_exit_status = status;

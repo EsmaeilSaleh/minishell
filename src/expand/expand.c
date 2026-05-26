@@ -163,7 +163,21 @@ char *expand_one_word(char *word, t_shell *shell)
     }
     while (word[i])
     {
-        if (word[i] == '$' && word[i + 1] == '\'')
+        if (word[i] == '\\' && word[i + 1] != '\0')
+        {
+            tmp[0] = word[i + 1];
+            tmp[1] = '\0';
+            piece = ft_strdup(tmp);
+            i += 2;
+        }
+        else if (word[i] == '\\')
+        {
+            tmp[0] = '\\';
+            tmp[1] = '\0';
+            piece = ft_strdup(tmp);
+            i++;
+        }
+        else if (word[i] == '$' && word[i + 1] == '\'')
         {
             i++;
             piece = copy_single_quoted(word, &i);
@@ -174,7 +188,6 @@ char *expand_one_word(char *word, t_shell *shell)
             piece = copy_double_quoted(word, &i, shell);
         }
         else if (word[i] == '\'')
-
             piece = copy_single_quoted(word, &i);
         else if (word[i] == '"')
             piece = copy_double_quoted(word, &i, shell);

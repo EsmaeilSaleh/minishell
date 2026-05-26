@@ -45,6 +45,7 @@ typedef struct s_redir
 	t_token_type type;
 	char *target;
 	int heredoc_fd;
+	int expand_body;
 	struct s_redir *next;
 } t_redir;
 
@@ -128,8 +129,8 @@ void exec_child_process(t_cmd *cmd, t_shell *shell, int prev_fd, int pipefd[2], 
 void expand_cmds(t_cmd *cmds, t_shell *shell);
 char *expand_one_word(char *word, t_shell *shell);
 
-int prepare_heredocs(t_cmd *cmds);
-int prepare_heredoc(char *delimiter);
+int prepare_heredocs(t_cmd *cmds, t_shell *shell);
+int prepare_heredoc(char *delimiter, int expand_body, t_shell *shell);
 extern volatile sig_atomic_t g_signal_status;
 void setup_heredoc_signals(void);
 void sigint_handler(int signum);
