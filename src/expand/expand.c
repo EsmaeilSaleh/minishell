@@ -193,21 +193,78 @@ char *expand_one_word(char *word, t_shell *shell)
 static void expand_argv(char **argv, t_shell *shell)
 {
     int i;
+    int j;
+    int argc;
     char *new_word;
+    char **new_argv;
+    char **split_words;
+    int split_i;
+    int split_count;
+    int has_quotes;
 
     if (argv == NULL)
         return;
+    argc = 0;
+    while (argv[argc])
+        argc++;
+    new_argv = malloc(sizeof(char *) * (argc * 8 + 1));
+    if (new_argv == NULL)
+        return;
     i = 0;
+    j = 0;
     while (argv[i])
     {
+        has_quotes = 0;
+        split_i = 0;
+        while (argv[i][split_i])
+        {
+            if (argv[i][split_i] == '\'' || argv[i][split_i] == '"')
+            {
+                has_quotes = 1;
+                break ;
+            }
+            split_i++;
+        }
         new_word = expand_one_word(argv[i], shell);
+        free(argv[i]);
         if (new_word != NULL)
         {
-            free(argv[i]);
-            argv[i] = new_word;
+            if (!has_quotes && new_word[0] == '\0')
+                free(new_word);
+            else if (!has_quotes)
+            {
+                split_words = ft_split(new_word, ' ');
+                if (split_words == NULL)
+                    new_argv[j++] = new_word;
+                else
+                {
+                    split_count = 0;
+                    while (split_words[split_count])
+                    {
+                        if (split_words[split_count][0] != '\0')
+                            new_argv[j++] = split_words[split_count];
+                        else
+                            free(split_words[split_count]);
+                        split_count++;
+                    }
+                    free(split_words);
+                    free(new_word);
+                }
+            }
+            else
+                new_argv[j++] = new_word;
         }
         i++;
     }
+    new_argv[j] = NULL;
+    i = 0;
+    while (new_argv[i])
+    {
+        argv[i] = new_argv[i];
+        i++;
+    }
+    argv[i] = NULL;
+    free(new_argv);
 }
 
 static void expand_redirs(t_redir *redirs, t_shell *shell)
