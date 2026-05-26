@@ -30,12 +30,12 @@ int ft_exit(char **argv, t_shell *shell)
     if (!is_numeric_arg(argv[1]))
     {
         shell->running = 0;
-        printf("exit: numeric argument required\n");
+        fprintf(stderr, "exit: numeric argument required\n");
         return (2);
     }
     if (argv[2] != NULL)
     {
-        printf("exit: too many arguments\n");
+        fprintf(stderr, "exit: too many arguments\n");
         return (1);
     }
     shell->running = 0;

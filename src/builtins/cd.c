@@ -7,16 +7,25 @@ int ft_cd(char **argv, t_shell *shell)
     (void)shell;
     if (argv[1] == NULL)
     {
-        printf("cd: missing argument\n");
+        fprintf(stderr, "cd: missing argument\n");
         return (1);
     }
     path = argv[1];
+    if (ft_strcmp(argv[1], "--") == 0)
+    {
+        path = get_env_value(shell->envp, "HOME");
+        if (path == NULL)
+        {
+            fprintf(stderr, "cd: HOME not set\n");
+            return (1);
+        }
+    }
     if (ft_strcmp(argv[1], "-") == 0)
     {
         path = get_env_value(shell->envp, "OLDPWD");
         if (path == NULL)
         {
-            printf("cd: OLDPWD not set\n");
+            fprintf(stderr, "cd: OLDPWD not set\n");
             return (1);
         }
         printf("%s\n", path);
