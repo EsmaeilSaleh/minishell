@@ -8,8 +8,22 @@ int execute_single(t_cmd *cmd, t_shell *shell)
     int stdin_backup;
     int stdout_backup;
 
-    if (cmd == NULL || cmd->argv == NULL || cmd->argv[0] == NULL)
+    if (cmd == NULL)
         return (0);
+    if (cmd->argv == NULL || cmd->argv[0] == NULL)
+    {
+        stdin_backup = dup(STDIN_FILENO);
+        stdout_backup = dup(STDOUT_FILENO);
+        if (apply_redirs(cmd->redirs) != 0)
+        {
+            restore_stdio(stdin_backup, stdout_backup);
+            shell->last_exit_status = 1;
+            return (1);
+        }
+        restore_stdio(stdin_backup, stdout_backup);
+        shell->last_exit_status = 0;
+        return (0);
+    }
     if (is_builtin(cmd->argv[0]))
     {
         stdin_backup = dup(STDIN_FILENO);
