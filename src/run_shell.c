@@ -72,6 +72,7 @@ static void handle_input(t_shell *shell, char *line)
 	if (cmds == NULL)
 	{
 		free_tokens(tokens);
+		shell->last_exit_status = 2;
 		return;
 	}
 	// print_cmds(cmds);

@@ -1,4 +1,15 @@
 #include "minishell.h"
+#include <string.h>
+#include <sys/stat.h>
+
+static int	is_directory(char *path)
+{
+	struct stat	st;
+
+	if (stat(path, &st) != 0)
+		return (0);
+	return (S_ISDIR(st.st_mode));
+}
 
 int has_slash(char *cmd)
 {
@@ -44,9 +55,11 @@ char *resolve_command_path(char *cmd_name, char **envp)
             return (ft_strdup(cmd_name));
         return (NULL);
     }
+    if (ft_strcmp(cmd_name, ".") == 0 || ft_strcmp(cmd_name, "..") == 0)
+        return (NULL);
     path_value = get_env_value(envp, "PATH");
     if (!path_value)
-        return (NULL);
+        path_value = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
     dirs = ft_split(path_value, ':');
     if (!dirs)
         return (NULL);
@@ -54,7 +67,7 @@ char *resolve_command_path(char *cmd_name, char **envp)
     while (dirs[i])
     {
         full_path = ft_join_path(dirs[i], cmd_name);
-        if (full_path && access(full_path, X_OK) == 0)
+        if (full_path && access(full_path, X_OK) == 0 && !is_directory(full_path))
         {
             free_split(dirs);
             return (full_path);
