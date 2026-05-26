@@ -44,11 +44,6 @@ static int is_valid_identifier(char *arg, int eq_index)
     return (1);
 }
 
-static int has_append_syntax(char *arg, int eq_index)
-{
-    return (eq_index > 0 && arg[eq_index - 1] == '+');
-}
-
 int env_find_index(char **envp, char *key)
 {
     int i;
@@ -122,8 +117,7 @@ int ft_export(char **argv, t_shell *shell)
     while (argv[i])
     {
         eq_index = find_equal_sign(argv[i]);
-        if (has_append_syntax(argv[i], eq_index)
-            || !is_valid_identifier(argv[i], eq_index))
+        if (!is_valid_identifier(argv[i], eq_index))
         {
             fprintf(stderr, "export: `%s': not a valid identifier\n", argv[i]);
             status = 1;

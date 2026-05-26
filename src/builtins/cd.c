@@ -11,15 +11,6 @@ int ft_cd(char **argv, t_shell *shell)
         return (1);
     }
     path = argv[1];
-    if (ft_strcmp(argv[1], "--") == 0)
-    {
-        path = get_env_value(shell->envp, "HOME");
-        if (path == NULL)
-        {
-            printf("cd: HOME not set\n");
-            return (1);
-        }
-    }
     if (ft_strcmp(argv[1], "-") == 0)
     {
         path = get_env_value(shell->envp, "OLDPWD");
