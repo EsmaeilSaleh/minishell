@@ -32,6 +32,7 @@ int execute_pipeline(t_cmd *cmds, t_shell *shell)
     {
         if (current->next && pipe(pipefd) == -1)
             return (1);
+        fflush(stdout);
         pid = fork();
         if (pid < 0)
             return (1);

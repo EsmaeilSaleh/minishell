@@ -46,6 +46,7 @@ int execute_single(t_cmd *cmd, t_shell *shell)
         shell->last_exit_status = 127;
         return (127);
     }
+    fflush(stdout);
     pid = fork();
     if (pid == 0)
     {
