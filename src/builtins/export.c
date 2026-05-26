@@ -14,6 +14,36 @@ static int find_equal_sign(char *arg)
     return (-1);
 }
 
+static int is_name_start(char c)
+{
+    return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_');
+}
+
+static int is_name_char(char c)
+{
+    return (is_name_start(c) || (c >= '0' && c <= '9'));
+}
+
+static int is_valid_identifier(char *arg, int eq_index)
+{
+    int i;
+
+    if (arg == NULL || arg[0] == '\0')
+        return (0);
+    if (eq_index == -1)
+        eq_index = ft_strlen(arg);
+    if (eq_index == 0 || !is_name_start(arg[0]))
+        return (0);
+    i = 1;
+    while (i < eq_index)
+    {
+        if (!is_name_char(arg[i]))
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
 int env_find_index(char **envp, char *key)
 {
     int i;
@@ -80,11 +110,20 @@ int ft_export(char **argv, t_shell *shell)
     char *key;
     char *new_entry;
     char **envp_temp;
+    int status;
 
     i = 1;
+    status = 0;
     while (argv[i])
     {
         eq_index = find_equal_sign(argv[i]);
+        if (!is_valid_identifier(argv[i], eq_index))
+        {
+            fprintf(stderr, "export: `%s': not a valid identifier\n", argv[i]);
+            status = 1;
+            i++;
+            continue;
+        }
         if (eq_index == -1)
         {
             i++;
@@ -98,5 +137,5 @@ int ft_export(char **argv, t_shell *shell)
         free(key);
         i++;
     }
-    return (0);
+    return (status);
 }
