@@ -163,7 +163,17 @@ char *expand_one_word(char *word, t_shell *shell)
     }
     while (word[i])
     {
-        if (word[i] == '\'')
+        if (word[i] == '$' && word[i + 1] == '\'')
+        {
+            i++;
+            piece = copy_single_quoted(word, &i);
+        }
+        else if (word[i] == '$' && word[i + 1] == '"')
+        {
+            i++;
+            piece = copy_double_quoted(word, &i, shell);
+        }
+        else if (word[i] == '\'')
 
             piece = copy_single_quoted(word, &i);
         else if (word[i] == '"')
