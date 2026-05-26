@@ -51,7 +51,7 @@ static char	*read_non_interactive_line(void)
 	return (line);
 }
 
-static void handle_input(t_shell *shell, char *line)
+static void handle_input(t_shell *shell, char *line, int interactive)
 {
 	t_token *tokens;
 	t_cmd *cmds;
@@ -66,6 +66,8 @@ static void handle_input(t_shell *shell, char *line)
 	{
 		free_tokens(tokens);
 		shell->last_exit_status = 2;
+		if (!interactive)
+			shell->running = 0;
 		return;
 	}
 	cmds = parser(tokens);
@@ -73,6 +75,8 @@ static void handle_input(t_shell *shell, char *line)
 	{
 		free_tokens(tokens);
 		shell->last_exit_status = 2;
+		if (!interactive)
+			shell->running = 0;
 		return;
 	}
 	// print_cmds(cmds);
@@ -103,7 +107,7 @@ void run_shell(t_shell *shell)
 				printf("exit\n");
 			break;
 		}
-		handle_input(shell, line);
+		handle_input(shell, line, interactive);
 		free(line);
 	}
 }
