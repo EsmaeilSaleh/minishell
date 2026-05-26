@@ -1,5 +1,25 @@
 #include "minishell.h"
 
+static int	has_unclosed_quotes(char *line)
+{
+	int	i;
+	int	single_quote;
+	int	double_quote;
+
+	i = 0;
+	single_quote = 0;
+	double_quote = 0;
+	while (line[i])
+	{
+		if (line[i] == '\'' && !double_quote)
+			single_quote = !single_quote;
+		else if (line[i] == '"' && !single_quote)
+			double_quote = !double_quote;
+		i++;
+	}
+	return (single_quote || double_quote);
+}
+
 static char	*read_non_interactive_line(void)
 {
 	char	*line;
@@ -9,6 +29,7 @@ static char	*read_non_interactive_line(void)
 	int		bytes_read;
 	char	*new_line;
 	int		i;
+	char	*joined_line;
 
 	line = malloc(128);
 	if (line == NULL)
@@ -48,6 +69,23 @@ static char	*read_non_interactive_line(void)
 		return (NULL);
 	}
 	line[len] = '\0';
+	while (has_unclosed_quotes(line))
+	{
+		joined_line = ft_strjoin(line, "\n");
+		free(line);
+		if (joined_line == NULL)
+			return (NULL);
+		line = joined_line;
+		new_line = read_non_interactive_line();
+		if (new_line == NULL)
+			break ;
+		joined_line = ft_strjoin(line, new_line);
+		free(line);
+		free(new_line);
+		if (joined_line == NULL)
+			return (NULL);
+		line = joined_line;
+	}
 	return (line);
 }
 

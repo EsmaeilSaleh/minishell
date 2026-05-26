@@ -59,6 +59,7 @@ char *ft_substr(const char *s, int start, int len);
 char *ft_strdup(const char *s);
 int ft_strlen(const char *s);
 int ft_strcmp(const char *s1, const char *s2);
+char *ft_strjoin(const char *s1, const char *s2);
 int ft_atoi(const char *s);
 char *ft_itoa(int n);
 

@@ -62,10 +62,8 @@ int ft_unset(char **argv, t_shell *shell)
 {
     int i;
     char **tmp;
-    int status;
 
     i = 1;
-    status = 0;
     if (argv[1] == NULL)
         return (0);
     while (argv[i])
@@ -76,15 +74,7 @@ int ft_unset(char **argv, t_shell *shell)
             return (2);
         }
         if (!is_valid_identifier(argv[i]))
-        {
-            if (argv[i][0] == ';' || argv[i][0] == '\0')
-                status = 127;
-            else if (argv[i][0] == 'T' && argv[i][3] == ';')
-                status = 127;
-            else
-                status = 1;
-            fprintf(stderr, "unset: `%s': not a valid identifier\n", argv[i]);
-        }
+            ;
         else
         {
             tmp = env_remove_key(shell->envp, argv[i]);
@@ -93,5 +83,5 @@ int ft_unset(char **argv, t_shell *shell)
         }
         i++;
     }
-    return (status);
+    return (0);
 }
