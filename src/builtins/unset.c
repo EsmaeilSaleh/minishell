@@ -1,87 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/27 15:08:35 by dkpg-md-          #+#    #+#             */
+/*   Updated: 2026/05/27 15:34:54 by dkpg-md-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static int is_name_start(char c)
+static char	**copy_without(char **envp, int index, int count)
 {
-    return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_');
+	char	**new_env;
+	int		i;
+	int		j;
+
+	new_env = malloc(sizeof(char *) * count);
+	if (!new_env)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (envp[i])
+	{
+		if (i != index)
+			new_env[j++] = envp[i];
+		i++;
+	}
+	new_env[j] = NULL;
+	return (new_env);
 }
 
-static int is_name_char(char c)
+static char	**env_remove_key(char **envp, char *key)
 {
-    return (is_name_start(c) || (c >= '0' && c <= '9'));
+	char	**new_env;
+	int		index;
+	int		count;
+
+	index = env_find_index(envp, key);
+	if (index == -1)
+		return (envp);
+	count = env_count(envp);
+	new_env = copy_without(envp, index, count);
+	if (!new_env)
+		return (NULL);
+	free(envp[index]);
+	free(envp);
+	return (new_env);
 }
 
-static int is_valid_identifier(char *arg)
+int	ft_unset(char **argv, t_shell *shell)
 {
-    int i;
+	int		i;
+	char	**tmp;
 
-    if (arg == NULL || arg[0] == '\0' || !is_name_start(arg[0]))
-        return (0);
-    i = 1;
-    while (arg[i])
-    {
-        if (!is_name_char(arg[i]))
-            return (0);
-        i++;
-    }
-    return (1);
-}
-
-static char **env_remove_key(char **envp, char *key)
-{
-    char **new_env;
-    int index;
-    int count;
-    int i;
-    int j;
-
-    index = env_find_index(envp, key);
-    if (index == -1)
-        return (envp);
-    count = env_count(envp);
-    new_env = malloc(sizeof(char *) * count);
-    if (!new_env)
-        return (NULL);
-    i = 0;
-    j = 0;
-    while (envp[i])
-    {
-        if (i != index)
-        {
-            new_env[j] = envp[i];
-            j++;
-        }
-        i++;
-    }
-    new_env[j] = NULL;
-    free(envp[index]);
-    free(envp);
-    return (new_env);
-}
-
-int ft_unset(char **argv, t_shell *shell)
-{
-    int i;
-    char **tmp;
-
-    i = 1;
-    if (argv[1] == NULL)
-        return (0);
-    while (argv[i])
-    {
-        if (argv[i][0] == '-' && argv[i][1] != '\0')
-        {
-            fprintf(stderr, "unset: `%s': not a valid identifier\n", argv[i]);
-            return (2);
-        }
-        if (!is_valid_identifier(argv[i]))
-            ;
-        else
-        {
-            tmp = env_remove_key(shell->envp, argv[i]);
-            if (tmp)
-                shell->envp = tmp;
-        }
-        i++;
-    }
-    return (0);
+	i = 1;
+	if (argv[1] == NULL)
+		return (0);
+	while (argv[i])
+	{
+		tmp = env_remove_key(shell->envp, argv[i]);
+		if (tmp)
+			shell->envp = tmp;
+		i++;
+	}
+	return (0);
 }
