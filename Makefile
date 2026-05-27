@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dkpg-md- <dkpg-md-@student.42berlin.d      +#+  +:+       +#+         #
+#    By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/05/27 14:46:31 by dkpg-md-          #+#    #+#              #
-#    Updated: 2026/05/27 14:46:35 by dkpg-md-         ###   ########.fr        #
+#    Updated: 2026/05/27 21:20:42 by dkpg-md-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,8 @@ SRCS = src/main.c \
        src/exec/execute_pipeline.c \
        src/exec/execute.c \
        src/exec/execute_single.c \
+       src/exec/execute_single_utils.c \
        src/exec/path_resolve.c \
-       src/exec/pipe_utils.c \
        src/exec/redir_apply.c \
        src/builtins/builtins.c \
        src/builtins/cd.c \
