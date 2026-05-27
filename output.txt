@@ -1,47 +1,3 @@
-[1;31m# **************************************************************************** #
-#                            MINISHELL NOT COMPILED                            #
-#                              TRY TO COMPILE ...                              #
-# **************************************************************************** #[m
-make: Entering directory '/root/minishell'
-cc -Wall -Wextra -Werror -Iinclude -c src/main.c -o src/main.o
-cc -Wall -Wextra -Werror -Iinclude -c src/run_shell.c -o src/run_shell.o
-cc -Wall -Wextra -Werror -Iinclude -c src/init/init_shell.c -o src/init/init_shell.o
-cc -Wall -Wextra -Werror -Iinclude -c src/signals/signals.c -o src/signals/signals.o
-cc -Wall -Wextra -Werror -Iinclude -c src/lexer/lexer_utils.c -o src/lexer/lexer_utils.o
-cc -Wall -Wextra -Werror -Iinclude -c src/lexer/lexer.c -o src/lexer/lexer.o
-cc -Wall -Wextra -Werror -Iinclude -c src/lexer/token_create.c -o src/lexer/token_create.o
-cc -Wall -Wextra -Werror -Iinclude -c src/lexer/token_free.c -o src/lexer/token_free.o
-cc -Wall -Wextra -Werror -Iinclude -c src/lexer/token_list.c -o src/lexer/token_list.o
-cc -Wall -Wextra -Werror -Iinclude -c src/lexer/token_print.c -o src/lexer/token_print.o
-cc -Wall -Wextra -Werror -Iinclude -c src/utils/strings.c -o src/utils/strings.o
-cc -Wall -Wextra -Werror -Iinclude -c src/utils/join_split_str.c -o src/utils/join_split_str.o
-cc -Wall -Wextra -Werror -Iinclude -c src/syntax/syntax_check.c -o src/syntax/syntax_check.o
-cc -Wall -Wextra -Werror -Iinclude -c src/syntax/syntax_utils.c -o src/syntax/syntax_utils.o
-cc -Wall -Wextra -Werror -Iinclude -c src/parser/cmd_free.c -o src/parser/cmd_free.o
-cc -Wall -Wextra -Werror -Iinclude -c src/parser/cmd_list.c -o src/parser/cmd_list.o
-cc -Wall -Wextra -Werror -Iinclude -c src/parser/cmd_print.c -o src/parser/cmd_print.o
-cc -Wall -Wextra -Werror -Iinclude -c src/parser/parse_cmd.c -o src/parser/parse_cmd.o
-cc -Wall -Wextra -Werror -Iinclude -c src/parser/parse_redir.c -o src/parser/parse_redir.o
-cc -Wall -Wextra -Werror -Iinclude -c src/parser/parser.c -o src/parser/parser.o
-cc -Wall -Wextra -Werror -Iinclude -c src/exec/exec_child.c -o src/exec/exec_child.o
-cc -Wall -Wextra -Werror -Iinclude -c src/exec/execute_pipeline.c -o src/exec/execute_pipeline.o
-cc -Wall -Wextra -Werror -Iinclude -c src/exec/execute.c -o src/exec/execute.o
-cc -Wall -Wextra -Werror -Iinclude -c src/exec/execute_single.c -o src/exec/execute_single.o
-cc -Wall -Wextra -Werror -Iinclude -c src/exec/path_resolve.c -o src/exec/path_resolve.o
-cc -Wall -Wextra -Werror -Iinclude -c src/exec/pipe_utils.c -o src/exec/pipe_utils.o
-cc -Wall -Wextra -Werror -Iinclude -c src/exec/redir_apply.c -o src/exec/redir_apply.o
-cc -Wall -Wextra -Werror -Iinclude -c src/builtins/builtins.c -o src/builtins/builtins.o
-cc -Wall -Wextra -Werror -Iinclude -c src/builtins/cd.c -o src/builtins/cd.o
-cc -Wall -Wextra -Werror -Iinclude -c src/builtins/echo.c -o src/builtins/echo.o
-cc -Wall -Wextra -Werror -Iinclude -c src/builtins/env.c -o src/builtins/env.o
-cc -Wall -Wextra -Werror -Iinclude -c src/builtins/exit.c -o src/builtins/exit.o
-cc -Wall -Wextra -Werror -Iinclude -c src/builtins/export.c -o src/builtins/export.o
-cc -Wall -Wextra -Werror -Iinclude -c src/builtins/pwd.c -o src/builtins/pwd.o
-cc -Wall -Wextra -Werror -Iinclude -c src/builtins/unset.c -o src/builtins/unset.o
-cc -Wall -Wextra -Werror -Iinclude -c src/expand/expand.c -o src/expand/expand.o
-cc -Wall -Wextra -Werror -Iinclude -c src/heredoc/heredoc.c -o src/heredoc/heredoc.o
-cc -Wall -Wextra -Werror src/main.o src/run_shell.o src/init/init_shell.o src/signals/signals.o src/lexer/lexer_utils.o src/lexer/lexer.o src/lexer/token_create.o src/lexer/token_free.o src/lexer/token_list.o src/lexer/token_print.o src/utils/strings.o src/utils/join_split_str.o src/syntax/syntax_check.o src/syntax/syntax_utils.o src/parser/cmd_free.o src/parser/cmd_list.o src/parser/cmd_print.o src/parser/parse_cmd.o src/parser/parse_redir.o src/parser/parser.o src/exec/exec_child.o src/exec/execute_pipeline.o src/exec/execute.o src/exec/execute_single.o src/exec/path_resolve.o src/exec/pipe_utils.o src/exec/redir_apply.o src/builtins/builtins.o src/builtins/cd.o src/builtins/echo.o src/builtins/env.o src/builtins/exit.o src/builtins/export.o src/builtins/pwd.o src/builtins/unset.o src/expand/expand.o src/heredoc/heredoc.o -lreadline -o minishell
-make: Leaving directory '/root/minishell'
   🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
   🚀                                [1;34mMANDATORY[m                                   🚀
   🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -1014,19 +970,19 @@ make: Leaving directory '/root/minishell'
 [1;35m  7:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:22[m  
 [1;35m  8:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:26[m  
 [1;35m  9:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:28[m  
-[1;35m  10:	[m[1;34mSTD_OUT:[m ❌  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:30[m  
+[1;35m  10:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:30[m  
 [1;35m  11:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:37[m  
 [1;35m  12:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:40[m  
-[1;35m  13:	[m[1;34mSTD_OUT:[m ❌  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:46[m  
-[1;35m  14:	[m[1;34mSTD_OUT:[m ❌  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:49[m  
-[1;35m  15:	[m[1;34mSTD_OUT:[m ❌  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:52[m  
+[1;35m  13:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:46[m  
+[1;35m  14:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:49[m  
+[1;35m  15:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:52[m  
 [1;35m  16:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:55[m  
 [1;35m  17:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/9_go_wild.sh:57[m  
 🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁
 🏁                                    [1;31mRESULT[m                                    🏁
 🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁
-[1;35m             TOTAL TEST COUNT: 941 [m[1;32m TESTS PASSED: 931[m [1;32m LEAKING: 0[m 
-[1;34m                     STD_OUT:[m [1;31m9[m  [1;36mSTD_ERR:[m [1;31m1[m  [1;36mEXIT_CODE:[m [1;31m1[m  
+[1;35m             TOTAL TEST COUNT: 941 [m[1;32m TESTS PASSED: 935[m [1;32m LEAKING: 0[m 
+[1;34m                     STD_OUT:[m [1;31m5[m  [1;36mSTD_ERR:[m [1;31m1[m  [1;36mEXIT_CODE:[m [1;31m1[m  
 [1;33m                         TOTAL FAILED AND PASSED CASES:
-[1;31m                                     ❌ 11 [m  
-[1;32m                                     ✅ 2812 [m  
+[1;31m                                     ❌ 7 [m  
+[1;32m                                     ✅ 2816 [m  

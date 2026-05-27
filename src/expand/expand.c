@@ -640,7 +640,7 @@ static void expand_redirs(t_redir *redirs, t_shell *shell)
 
     while (redirs)
     {
-        if (redirs->type == TOK_HEREDOC && !redirs->expand_body)
+        if (redirs->type == TOK_HEREDOC)
             new_target = strip_quotes(redirs->target);
         else
             new_target = expand_one_word(redirs->target, shell);
