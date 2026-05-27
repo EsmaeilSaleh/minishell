@@ -53,6 +53,10 @@ SRCS = src/main.c \
        src/builtins/pwd.c \
        src/builtins/unset.c \
        src/expand/expand.c \
+       src/expand/expand_utils.c \
+       src/expand/expand_var.c \
+       src/expand/quote_remove.c \
+       src/expand/expand_args.c \
        src/heredoc/heredoc.c
 
 OBJS = $(patsubst src/%.c, $(OBJ_DIR)/%.o, $(SRCS))
