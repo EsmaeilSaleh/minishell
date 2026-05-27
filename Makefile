@@ -29,6 +29,7 @@ SRCS = src/main.c \
        src/lexer/token_list.c \
        src/lexer/token_print.c \
        src/utils/strings.c \
+       src/utils/number_str.c \
        src/utils/join_split_str.c \
        src/syntax/syntax_check.c \
        src/syntax/syntax_utils.c \
@@ -76,4 +77,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-
