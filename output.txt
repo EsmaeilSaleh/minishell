@@ -107,7 +107,7 @@
 [1;35m  9:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/10_parsing_hell.sh:26[m  
 [1;35m  10:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/10_parsing_hell.sh:28[m  
 [1;35m  11:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/10_parsing_hell.sh:30[m  
-[1;35m  12:	[m[1;34mSTD_OUT:[m ❌  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/10_parsing_hell.sh:32[m  
+[1;35m  12:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/10_parsing_hell.sh:32[m  
 [1;35m  13:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/10_parsing_hell.sh:37[m  
 [1;35m  14:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/10_parsing_hell.sh:40[m  
 [1;35m  15:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/10_parsing_hell.sh:45[m  
@@ -446,7 +446,7 @@
 [1;35m  221:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_builtins.sh:546[m  
 [1;35m  222:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_builtins.sh:548[m  
 [1;35m  223:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_builtins.sh:550[m  
-[1;35m  224:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ❌  [1;36mEXIT_CODE:[m ❌[1;31m [ minishell(0)  bash(127) ][m  [0;90m/root/42_minishell_tester/cmds/mand/1_builtins.sh:552[m  
+[1;35m  224:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_builtins.sh:552[m  
 [1;35m  225:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_builtins.sh:554[m  
 [1;35m  226:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_builtins.sh:556[m  
 [1;35m  227:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_builtins.sh:558[m  
@@ -527,7 +527,7 @@
 [1;33m  # **************************************************************************** #[m
 [1;35m  1:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:4[m  
 [1;35m  2:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:6[m  
-[1;35m  3:	[m[1;34mSTD_OUT:[m ❌  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:8[m  
+[1;35m  3:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:8[m  
 [1;35m  4:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:10[m  
 [1;35m  5:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:12[m  
 [1;35m  6:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:14[m  
@@ -540,7 +540,7 @@
 [1;35m  13:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:28[m  
 [1;35m  14:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:30[m  
 [1;35m  15:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:32[m  
-[1;35m  16:	[m[1;34mSTD_OUT:[m ❌  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:34[m  
+[1;35m  16:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:34[m  
 [1;35m  17:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:36[m  
 [1;35m  18:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:38[m  
 [1;35m  19:	[m[1;34mSTD_OUT:[m ✅  [1;33mSTD_ERR:[m ✅  [1;36mEXIT_CODE:[m ✅  [0;90m/root/42_minishell_tester/cmds/mand/1_pipelines.sh:40[m  
@@ -981,8 +981,8 @@
 🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁
 🏁                                    [1;31mRESULT[m                                    🏁
 🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁🏁
-[1;35m             TOTAL TEST COUNT: 941 [m[1;32m TESTS PASSED: 935[m [1;32m LEAKING: 0[m 
-[1;34m                     STD_OUT:[m [1;31m5[m  [1;36mSTD_ERR:[m [1;31m1[m  [1;36mEXIT_CODE:[m [1;31m1[m  
+[1;35m             TOTAL TEST COUNT: 941 [m[1;32m TESTS PASSED: 939[m [1;32m LEAKING: 0[m 
+[1;34m                     STD_OUT:[m [1;31m2[m  [1;36mSTD_ERR:[m [1;32m✓ [m  [1;36mEXIT_CODE:[m [1;32m✓ [m  
 [1;33m                         TOTAL FAILED AND PASSED CASES:
-[1;31m                                     ❌ 7 [m  
-[1;32m                                     ✅ 2816 [m  
+[1;31m                                     ❌ 2 [m  
+[1;32m                                     ✅ 2821 [m  

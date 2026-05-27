@@ -71,10 +71,51 @@ static void	set_shlvl(t_shell *shell)
 	shell->envp = new_env;
 }
 
+static void	init_oldpwd(t_shell *shell)
+{
+	int		idx;
+	int		count;
+	char	**new_env;
+	int		i;
+	char	*entry;
+
+	idx = env_find_index(shell->envp, "OLDPWD");
+	if (idx != -1)
+	{
+		if (shell->envp[idx][6] == '=')
+		{
+			free(shell->envp[idx]);
+			shell->envp[idx] = ft_strdup("OLDPWD");
+		}
+		return ;
+	}
+	count = env_count(shell->envp);
+	new_env = malloc(sizeof(char *) * (count + 2));
+	if (!new_env)
+		return ;
+	i = 0;
+	while (i < count)
+	{
+		new_env[i] = shell->envp[i];
+		i++;
+	}
+	entry = ft_strdup("OLDPWD");
+	if (!entry)
+	{
+		free(new_env);
+		return ;
+	}
+	new_env[count] = entry;
+	new_env[count + 1] = NULL;
+	free(shell->envp);
+	shell->envp = new_env;
+}
+
 void init_shell(t_shell *shell, char **envp)
 {
 	shell->envp = copy_envp(envp);
 	shell->last_exit_status = 0;
 	shell->running = 1;
 	set_shlvl(shell);
+	init_oldpwd(shell);
 }
