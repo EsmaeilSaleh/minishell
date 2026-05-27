@@ -210,4 +210,55 @@ void run_shell(t_shell *shell)
 		handle_input(shell, line, interactive);
 		free(line);
 	}
+	free_split(shell->envp);
+	rl_clear_history();
 }
+
+/*
+void run_shell(t_shell *shell)
+{
+	char	*line;
+	int		interactive;
+
+	rl_catch_signals = 0;
+	interactive = isatty(STDIN_FILENO) && isatty(STDOUT_FILENO);
+	while (shell->running)
+	{
+		setup_signals();
+		if (interactive)
+		{
+			line = readline("minishell$ ");
+			while (line != NULL && has_unclosed_quotes(line))
+			{
+				char *cont;
+				char *tmp;
+				cont = readline("> ");
+				if (cont == NULL)
+					break ;
+				tmp = ft_strjoin(line, "\n");
+				free(line);
+				line = tmp;
+				if (line == NULL)
+				{
+					free(cont);
+					break ;
+				}
+				tmp = ft_strjoin(line, cont);
+				free(line);
+				free(cont);
+				line = tmp;
+			}
+		}
+		else
+			line = read_non_interactive_line();
+		if (line == NULL)
+		{
+			if (interactive)
+				printf("exit\n");
+			break;
+		}
+		handle_input(shell, line, interactive);
+		free(line);
+	}
+}
+*/
