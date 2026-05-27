@@ -76,6 +76,8 @@ t_cmd *parse_command(t_token *tokens)
             new_node = new_redir(tokens->type, target);
             if (new_node == NULL)
                 return (parse_cmd_error(argv, i, redirs));
+            if (tokens->fd != -1)
+                new_node->fd = tokens->fd;
             if (tokens->type == TOK_HEREDOC)
                 new_node->expand_body = !token_has_quotes(tokens->next->value);
             add_redir_back(&redirs, new_node);

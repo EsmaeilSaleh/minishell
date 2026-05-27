@@ -37,6 +37,7 @@ typedef struct s_token
 {
 	char *value;
 	t_token_type type;
+	int fd;
 	struct s_token *next;
 } t_token;
 
@@ -46,6 +47,7 @@ typedef struct s_redir
 	char *target;
 	int heredoc_fd;
 	int expand_body;
+	int fd;
 	struct s_redir *next;
 } t_redir;
 
@@ -125,6 +127,7 @@ void restore_stdio(int stdin_backup, int stdout_backup);
 
 int execute_pipeline(t_cmd *cmds, t_shell *shell);
 void exec_child_process(t_cmd *cmd, t_shell *shell, int prev_fd, int pipefd[2], int has_next);
+void set_underscore(t_shell *shell, char *path);
 
 void expand_cmds(t_cmd *cmds, t_shell *shell);
 char *expand_one_word(char *word, t_shell *shell);

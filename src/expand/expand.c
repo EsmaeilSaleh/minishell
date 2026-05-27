@@ -581,12 +581,69 @@ static char **expand_argv(char **argv, t_shell *shell)
     return (new_argv);
 }
 
+static char	*strip_quotes(char *word)
+{
+    char	*result;
+    char	*piece;
+    char	tmp[2];
+    int		i;
+    int		start;
+    char	q;
+
+    result = ft_strdup("");
+    if (!result)
+        return (NULL);
+    i = 0;
+    tmp[1] = '\0';
+    while (word[i])
+    {
+        if (word[i] == '\'' || word[i] == '"')
+        {
+            q = word[i++];
+            start = i;
+            while (word[i] && word[i] != q)
+                i++;
+            piece = ft_substr(word, start, i - start);
+            if (!piece)
+            {
+                free(result);
+                return (NULL);
+            }
+            result = append_str(result, piece);
+            free(piece);
+            if (!result)
+                return (NULL);
+            if (word[i] == q)
+                i++;
+        }
+        else
+        {
+            tmp[0] = word[i++];
+            piece = ft_strdup(tmp);
+            if (!piece)
+            {
+                free(result);
+                return (NULL);
+            }
+            result = append_str(result, piece);
+            free(piece);
+            if (!result)
+                return (NULL);
+        }
+    }
+    return (result);
+}
+
 static void expand_redirs(t_redir *redirs, t_shell *shell)
 {
     char *new_target;
+
     while (redirs)
     {
-        new_target = expand_one_word(redirs->target, shell);
+        if (redirs->type == TOK_HEREDOC && !redirs->expand_body)
+            new_target = strip_quotes(redirs->target);
+        else
+            new_target = expand_one_word(redirs->target, shell);
         if (new_target != NULL)
         {
             free(redirs->target);

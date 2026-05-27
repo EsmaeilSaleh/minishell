@@ -15,6 +15,10 @@ t_redir *new_redir(t_token_type type, char *target)
     node->heredoc_fd = -1;
     node->expand_body = 0;
     node->next = NULL;
+    if (type == TOK_REDIR_IN || type == TOK_HEREDOC)
+        node->fd = 0;
+    else
+        node->fd = 1;
     return (node);
 }
 

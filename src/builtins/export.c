@@ -109,6 +109,105 @@ static char **env_add_or_replace(char **envp, char *new_entry, char *key)
     free(envp);
     return (new_env);
 }
+static int	export_name_cmp(char *a, char *b)
+{
+    int	i;
+
+    i = 0;
+    while (a[i] && b[i])
+    {
+        if (a[i] == '=' || b[i] == '=')
+            break ;
+        if (a[i] != b[i])
+            return ((unsigned char)a[i] - (unsigned char)b[i]);
+        i++;
+    }
+    if ((a[i] == '\0' || a[i] == '=') && (b[i] == '\0' || b[i] == '='))
+        return (0);
+    if (a[i] == '\0' || a[i] == '=')
+        return (-1);
+    return (1);
+}
+
+static void	sort_env_copy(char **arr, int count)
+{
+    int		i;
+    int		j;
+    char	*tmp;
+
+    i = 0;
+    while (i < count - 1)
+    {
+        j = 0;
+        while (j < count - i - 1)
+        {
+            if (export_name_cmp(arr[j], arr[j + 1]) > 0)
+            {
+                tmp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = tmp;
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
+static void	print_declare_entry(char *entry)
+{
+    int	eq;
+    int	i;
+
+    eq = find_equal_sign(entry);
+    if (eq == -1)
+    {
+        printf("declare -x %s\n", entry);
+        return ;
+    }
+    i = 0;
+    printf("declare -x ");
+    while (i < eq)
+        printf("%c", entry[i++]);
+    printf("=\"");
+    i = eq + 1;
+    while (entry[i])
+    {
+        if (entry[i] == '\\' || entry[i] == '"')
+            printf("\\");
+        printf("%c", entry[i]);
+        i++;
+    }
+    printf("\"\n");
+}
+
+static int	print_export_no_args(t_shell *shell)
+{
+    int		count;
+    char	**sorted;
+    int		i;
+
+    count = env_count(shell->envp);
+    sorted = malloc(sizeof(char *) * (count + 1));
+    if (!sorted)
+        return (1);
+    i = 0;
+    while (i < count)
+    {
+        sorted[i] = shell->envp[i];
+        i++;
+    }
+    sorted[i] = NULL;
+    sort_env_copy(sorted, count);
+    i = 0;
+    while (sorted[i])
+    {
+        print_declare_entry(sorted[i]);
+        i++;
+    }
+    free(sorted);
+    return (0);
+}
+
 int ft_export(char **argv, t_shell *shell)
 {
     int i;
@@ -118,6 +217,8 @@ int ft_export(char **argv, t_shell *shell)
     char **envp_temp;
     int status;
 
+    if (!argv[1])
+        return (print_export_no_args(shell));
     i = 1;
     status = 0;
     while (argv[i])

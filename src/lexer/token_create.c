@@ -9,6 +9,7 @@ t_token *new_token(char *value, t_token_type type)
         return (NULL);
     new->value = value;
     new->type = type;
+    new->fd = -1;
     new->next = NULL;
     return (new);
 }

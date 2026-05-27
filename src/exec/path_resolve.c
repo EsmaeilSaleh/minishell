@@ -45,6 +45,7 @@ char *resolve_command_path(char *cmd_name, char **envp)
     char *path_value;
     char **dirs;
     char *full_path;
+    char *found_noexec;
     int i;
 
     if (!cmd_name || !*cmd_name)
@@ -63,18 +64,23 @@ char *resolve_command_path(char *cmd_name, char **envp)
     dirs = ft_split(path_value, ':');
     if (!dirs)
         return (NULL);
+    found_noexec = NULL;
     i = 0;
     while (dirs[i])
     {
         full_path = ft_join_path(dirs[i], cmd_name);
         if (full_path && access(full_path, X_OK) == 0 && !is_directory(full_path))
         {
+            free(found_noexec);
             free_split(dirs);
             return (full_path);
         }
+        if (full_path && access(full_path, F_OK) == 0 && !is_directory(full_path)
+            && !found_noexec)
+            found_noexec = ft_strdup(full_path);
         free(full_path);
         i++;
     }
     free_split(dirs);
-    return (NULL);
+    return (found_noexec);
 }

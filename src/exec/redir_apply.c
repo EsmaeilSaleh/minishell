@@ -23,29 +23,24 @@ static int open_redir_file(t_redir *redir)
 
 int apply_redirs(t_redir *redirs)
 {
-    int fd;
+    int file_fd;
+
     while (redirs)
     {
-        fd = open_redir_file(redirs);
-        if (fd < 0)
+        file_fd = open_redir_file(redirs);
+        if (file_fd < 0)
         {
             perror("redir");
             return (1);
         }
-        if ((redirs->type == TOK_REDIR_IN || redirs->type == TOK_HEREDOC) && dup2(fd, STDIN_FILENO) < 0)
+        if (dup2(file_fd, redirs->fd) < 0)
         {
             perror("dup2");
-            close(fd);
+            close(file_fd);
             return (1);
         }
-
-        if ((redirs->type == TOK_REDIR_OUT || redirs->type == TOK_APPEND) && dup2(fd, STDOUT_FILENO) < 0)
-        {
-            perror("dup2");
-            close(fd);
-            return (1);
-        }
-        close(fd);
+        if (file_fd != redirs->fd)
+            close(file_fd);
         if (redirs->type == TOK_HEREDOC)
             redirs->heredoc_fd = -1;
         redirs = redirs->next;

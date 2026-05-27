@@ -7,6 +7,7 @@ int execute_single(t_cmd *cmd, t_shell *shell)
     int status;
     int stdin_backup;
     int stdout_backup;
+    int stderr_backup;
 
     if (cmd == NULL)
         return (0);
@@ -14,13 +15,18 @@ int execute_single(t_cmd *cmd, t_shell *shell)
     {
         stdin_backup = dup(STDIN_FILENO);
         stdout_backup = dup(STDOUT_FILENO);
+        stderr_backup = dup(STDERR_FILENO);
         if (apply_redirs(cmd->redirs) != 0)
         {
             restore_stdio(stdin_backup, stdout_backup);
+            dup2(stderr_backup, STDERR_FILENO);
+            close(stderr_backup);
             shell->last_exit_status = 1;
             return (1);
         }
         restore_stdio(stdin_backup, stdout_backup);
+        dup2(stderr_backup, STDERR_FILENO);
+        close(stderr_backup);
         shell->last_exit_status = 0;
         return (0);
     }
@@ -29,14 +35,19 @@ int execute_single(t_cmd *cmd, t_shell *shell)
     {
         stdin_backup = dup(STDIN_FILENO);
         stdout_backup = dup(STDOUT_FILENO);
+        stderr_backup = dup(STDERR_FILENO);
         if (apply_redirs(cmd->redirs) != 0)
         {
             restore_stdio(stdin_backup, stdout_backup);
+            dup2(stderr_backup, STDERR_FILENO);
+            close(stderr_backup);
             shell->last_exit_status = 1;
             return (1);
         }
         shell->last_exit_status = exec_builtin(cmd, shell);
         restore_stdio(stdin_backup, stdout_backup);
+        dup2(stderr_backup, STDERR_FILENO);
+        close(stderr_backup);
         return (shell->last_exit_status);
     }
     path = resolve_command_path(cmd->argv[0], shell->envp);
@@ -52,6 +63,7 @@ int execute_single(t_cmd *cmd, t_shell *shell)
     {
         if (apply_redirs(cmd->redirs) != 0)
             exit(1);
+        set_underscore(shell, path);
         execve(path, cmd->argv, shell->envp);
         perror("execve");
         exit(126);
