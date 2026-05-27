@@ -172,7 +172,8 @@ static void	print_declare_entry(char *entry)
     i = eq + 1;
     while (entry[i])
     {
-        if (entry[i] == '\\' || entry[i] == '"')
+        if (entry[i] == '\\' || entry[i] == '"'
+            || entry[i] == '$' || entry[i] == '`')
             printf("\\");
         printf("%c", entry[i]);
         i++;

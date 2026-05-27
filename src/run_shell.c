@@ -89,11 +89,51 @@ static char	*read_non_interactive_line(void)
 	return (line);
 }
 
+static int	find_semi_outside_quotes(char *line)
+{
+	int	i;
+	int	sq;
+	int	dq;
+
+	i = 0;
+	sq = 0;
+	dq = 0;
+	while (line[i])
+	{
+		if (line[i] == '\'' && !dq)
+			sq = !sq;
+		else if (line[i] == '"' && !sq)
+			dq = !dq;
+		else if (line[i] == ';' && !sq && !dq)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
 static void handle_input(t_shell *shell, char *line, int interactive)
 {
 	t_token *tokens;
 	t_cmd *cmds;
+	int		semi;
+	char	*before;
+	char	*after;
 
+	semi = find_semi_outside_quotes(line);
+	if (semi != -1)
+	{
+		before = ft_substr(line, 0, semi);
+		after = ft_strdup(line + semi + 1);
+		if (before)
+		{
+			handle_input(shell, before, interactive);
+			free(before);
+		}
+		if (after && shell->running)
+			handle_input(shell, after, interactive);
+		free(after);
+		return ;
+	}
 	if (*line != '\0')
 		add_history(line);
 	tokens = lexer(line);
