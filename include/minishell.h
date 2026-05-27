@@ -1,6 +1,7 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+#include <sys/stat.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -9,12 +10,6 @@
 #include <readline/history.h>
 #include <sys/wait.h>
 #include <fcntl.h>
-
-extern int rl_catch_signals;
-extern int rl_done;
-#ifndef __linux__
-extern void rl_replace_line(const char *text, int clear_undo);
-#endif
 
 typedef struct s_shell
 {
@@ -57,6 +52,14 @@ typedef struct s_cmd
 	t_redir *redirs;
 	struct s_cmd *next;
 } t_cmd;
+
+typedef struct s_pipe_info
+{
+	int		prev_fd;
+	int		pipefd[2];
+	int		has_next;
+	pid_t	last_pid;
+}	t_pipe_info;
 
 char *ft_substr(const char *s, int start, int len);
 char *ft_strdup(const char *s);
@@ -101,8 +104,14 @@ void print_cmds(t_cmd *cmds);
 
 char *get_env_value(char **envp, const char *name);
 
+int		handle_redir_only(t_cmd *cmd, t_shell *shell);
+int		handle_builtin(t_cmd *cmd, t_shell *shell);
+void	handle_child(t_cmd *cmd, t_shell *shell, char *path);
+int		handle_parent(int status, t_shell *shell);
+
 int execute_cmds(t_cmd *cmds, t_shell *shell);
 int execute_single(t_cmd *cmd, t_shell *shell);
+int	execute_pipeline(t_cmd *cmds, t_shell *shell);
 char *resolve_command_path(char *cmd_name, char **envp);
 int ft_strncmp(const char *s1, const char *s2, size_t n);
 char *ft_join_path(char *dir, char *cmd);
@@ -125,8 +134,7 @@ int ft_exit(char **argv, t_shell *shell);
 int apply_redirs(t_redir *redirs);
 void restore_stdio(int stdin_backup, int stdout_backup);
 
-int execute_pipeline(t_cmd *cmds, t_shell *shell);
-void exec_child_process(t_cmd *cmd, t_shell *shell, int prev_fd, int pipefd[2], int has_next);
+void	exec_child_process(t_cmd *cmd, t_shell *shell, t_pipe_info *info);
 void set_underscore(t_shell *shell, char *path);
 
 void expand_cmds(t_cmd *cmds, t_shell *shell);
