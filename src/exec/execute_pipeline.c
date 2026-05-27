@@ -6,7 +6,7 @@
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 20:27:14 by dkpg-md-          #+#    #+#             */
-/*   Updated: 2026/05/27 21:10:51 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/05/27 21:45:44 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	count_cmds(t_cmd *cmds)
 	}
 	return (count);
 }
+
 
 static void	update_last_status(pid_t waited, pid_t last,
 		int status, t_shell *shell)
