@@ -34,7 +34,6 @@ SRCS = src/main.c \
        src/syntax/syntax_utils.c \
        src/parser/cmd_free.c \
        src/parser/cmd_list.c \
-       src/parser/cmd_print.c \
        src/parser/parse_cmd.c \
        src/parser/parse_redir.c \
        src/parser/parser.c \
