@@ -176,7 +176,29 @@ void run_shell(t_shell *shell)
 	{
 		setup_signals();
 		if (interactive)
+		{
 			line = readline("minishell$ ");
+			while (line != NULL && has_unclosed_quotes(line))
+			{
+				char *cont;
+				char *tmp;
+				cont = readline("> ");
+				if (cont == NULL)
+					break ;
+				tmp = ft_strjoin(line, "\n");
+				free(line);
+				line = tmp;
+				if (line == NULL)
+				{
+					free(cont);
+					break ;
+				}
+				tmp = ft_strjoin(line, cont);
+				free(line);
+				free(cont);
+				line = tmp;
+			}
+		}
 		else
 			line = read_non_interactive_line();
 		if (line == NULL)
