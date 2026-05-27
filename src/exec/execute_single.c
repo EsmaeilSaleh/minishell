@@ -6,7 +6,7 @@
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 00:17:23 by dkpg-md-          #+#    #+#             */
-/*   Updated: 2026/05/27 21:42:52 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/05/27 21:44:36 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	fork_and_exec(t_cmd *cmd, t_shell *shell, char *path)
 	pid_t	pid;
 	int		status;
 
+	fflush(stdout);
 	set_signal_handler(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
