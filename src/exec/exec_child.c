@@ -55,7 +55,8 @@ void exec_child_process(t_cmd *cmd, t_shell *shell, int prev_fd, int pipefd[2], 
         exit(1);
     if (cmd->argv == NULL || cmd->argv[0] == NULL)
         exit(0);
-    if (is_builtin(cmd->argv[0]))
+    if (is_builtin(cmd->argv[0])
+        && !(ft_strcmp(cmd->argv[0], "env") == 0 && cmd->argv[1] != NULL))
         exit(exec_builtin(cmd, shell));
     path = resolve_command_path(cmd->argv[0], shell->envp);
     if (path == NULL)

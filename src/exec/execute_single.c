@@ -45,6 +45,7 @@ int execute_single(t_cmd *cmd, t_shell *shell)
             return (1);
         }
         shell->last_exit_status = exec_builtin(cmd, shell);
+        fflush(stdout);
         restore_stdio(stdin_backup, stdout_backup);
         dup2(stderr_backup, STDERR_FILENO);
         close(stderr_backup);
