@@ -1,97 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/27 00:19:17 by dkpg-md-          #+#    #+#             */
+/*   Updated: 2026/05/28 17:52:01 by dkpg-md-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static void	set_env_var(t_shell *shell, const char *key, const char *value)
+static void	update_env_var(t_shell *shell, char *key, char *value)
 {
-	char	*key_eq;
 	char	*entry;
-	int		idx;
-	int		count;
-	char	**new_env;
-	int		i;
+	char	*tmp;
+	char	*argv[3];
 
-	key_eq = ft_strjoin(key, "=");
-	if (!key_eq)
+	tmp = ft_strjoin(key, "=");
+	if (!tmp)
 		return ;
-	entry = ft_strjoin(key_eq, value);
-	free(key_eq);
+	entry = ft_strjoin(tmp, value);
+	free(tmp);
 	if (!entry)
 		return ;
-	idx = env_find_index(shell->envp, (char *)key);
-	if (idx != -1)
+	argv[0] = "export";
+	argv[1] = entry;
+	argv[2] = NULL;
+	ft_export(argv, shell);
+	free(entry);
+}
+
+static char	*get_cd_path(char **argv, t_shell *shell)
+{
+	char	*path;
+
+	if (argv[1] == NULL || ft_strcmp(argv[1], "--") == 0)
 	{
-		free(shell->envp[idx]);
-		shell->envp[idx] = entry;
-		return ;
+		path = get_env_value(shell->envp, "HOME");
+		if (!path)
+			return (write(2, "cd: HOME not set\n", 17), NULL);
+		return (path);
 	}
-	count = env_count(shell->envp);
-	new_env = malloc(sizeof(char *) * (count + 2));
-	if (!new_env)
+	if (argv[2] != NULL)
+		return (write(2, "cd: too many arguments\n", 23), NULL);
+	if (ft_strcmp(argv[1], "-") == 0)
 	{
-		free(entry);
-		return ;
+		path = get_env_value(shell->envp, "OLDPWD");
+		if (!path)
+			return (write(2, "cd: OLDPWD not set\n", 19), NULL);
+		printf("%s\n", path);
+		return (path);
 	}
-	i = 0;
-	while (i < count)
-	{
-		new_env[i] = shell->envp[i];
-		i++;
-	}
-	new_env[count] = entry;
-	new_env[count + 1] = NULL;
-	free(shell->envp);
-	shell->envp = new_env;
+	return (argv[1]);
 }
 
 int	ft_cd(char **argv, t_shell *shell)
 {
 	char	*path;
-	char	cwd[4096];
-	int		print_new_path;
 	char	*old_pwd;
+	char	buffer[1024];
 
-	print_new_path = 0;
-	if (argv[1] != NULL && argv[2] != NULL
-		&& !(argv[2][0] >= '0' && argv[2][0] <= '9' && argv[2][1] == '\0'))
-	{
-		fprintf(stderr, "cd: too many arguments\n");
-		return (1);
-	}
-	if (argv[1] == NULL || ft_strcmp(argv[1], "--") == 0)
-	{
-		path = get_env_value(shell->envp, "HOME");
-		if (path == NULL)
-		{
-			fprintf(stderr, "cd: HOME not set\n");
-			return (1);
-		}
-	}
-	else if (ft_strcmp(argv[1], "-") == 0)
-	{
-		path = get_env_value(shell->envp, "OLDPWD");
-		if (path == NULL)
-		{
-			fprintf(stderr, "cd: OLDPWD not set\n");
-			return (1);
-		}
-		print_new_path = 1;
-	}
-	else
-		path = argv[1];
 	old_pwd = get_env_value(shell->envp, "PWD");
-	if (chdir(path) != 0)
-	{
-		perror("cd");
+	path = get_cd_path(argv, shell);
+	if (path == NULL)
 		return (1);
-	}
+	if (chdir(path) != 0)
+		return (perror("cd"), 1);
 	if (old_pwd)
-		set_env_var(shell, "OLDPWD", old_pwd);
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-	{
-		set_env_var(shell, "PWD", cwd);
-		if (print_new_path)
-			printf("%s\n", cwd);
-	}
-	else if (print_new_path)
-		printf("%s\n", path);
+		update_env_var(shell, "OLDPWD", old_pwd);
+	if (getcwd(buffer, sizeof(buffer)))
+		update_env_var(shell, "PWD", buffer);
 	return (0);
 }
