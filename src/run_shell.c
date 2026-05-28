@@ -1,120 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_shell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/27 00:17:23 by dkpg-md-          #+#    #+#             */
+/*   Updated: 2026/05/28 19:47:52 by dkpg-md-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static int	has_unclosed_quotes(char *line)
+void	process_tokens(t_shell *shell, char *line, int interactive)
 {
-	int	i;
-	int	single_quote;
-	int	double_quote;
+	t_token	*tokens;
+	t_cmd	*cmds;
 
-	i = 0;
-	single_quote = 0;
-	double_quote = 0;
-	while (line[i])
+//	cmds = parser(tokens);
+	tokens = lexer(line);
+	if (!tokens)
+		return ;
+	if (!syntax_check(tokens) || !(cmds = parser(tokens)))
 	{
-		if (line[i] == '\'' && !double_quote)
-			single_quote = !single_quote;
-		else if (line[i] == '"' && !single_quote)
-			double_quote = !double_quote;
-		i++;
+		free_tokens(tokens);
+		shell->last_exit_status = 2;
+		if (!interactive)
+			shell->running = 0;
+		return ;
 	}
-	return (single_quote || double_quote);
+	free_tokens(tokens);
+	expand_cmds(cmds, shell);
+	execute_cmds(cmds, shell);
+	free_cmds(cmds);
 }
 
-static char	*read_non_interactive_line(void)
+static void	handle_input(t_shell *shell, char *line, int interactive)
 {
-	char	*line;
-	char	c;
-	int		len;
-	int		capacity;
-	int		bytes_read;
-	char	*new_line;
-	int		i;
-	char	*joined_line;
-
-	line = malloc(128);
-	if (line == NULL)
-		return (NULL);
-	len = 0;
-	capacity = 128;
-	while (1)
-	{
-		bytes_read = read(STDIN_FILENO, &c, 1);
-		if (bytes_read <= 0)
-			break ;
-		if (c == '\n')
-			break ;
-		if (len + 1 >= capacity)
-		{
-			new_line = malloc(capacity * 2);
-			if (new_line == NULL)
-			{
-				free(line);
-				return (NULL);
-			}
-			i = 0;
-			while (i < len)
-			{
-				new_line[i] = line[i];
-				i++;
-			}
-			free(line);
-			line = new_line;
-			capacity *= 2;
-		}
-		line[len++] = c;
-	}
-	if (bytes_read <= 0 && len == 0)
-	{
-		free(line);
-		return (NULL);
-	}
-	line[len] = '\0';
-	while (has_unclosed_quotes(line))
-	{
-		joined_line = ft_strjoin(line, "\n");
-		free(line);
-		if (joined_line == NULL)
-			return (NULL);
-		line = joined_line;
-		new_line = read_non_interactive_line();
-		if (new_line == NULL)
-			break ;
-		joined_line = ft_strjoin(line, new_line);
-		free(line);
-		free(new_line);
-		if (joined_line == NULL)
-			return (NULL);
-		line = joined_line;
-	}
-	return (line);
-}
-
-static int	find_semi_outside_quotes(char *line)
-{
-	int	i;
-	int	sq;
-	int	dq;
-
-	i = 0;
-	sq = 0;
-	dq = 0;
-	while (line[i])
-	{
-		if (line[i] == '\'' && !dq)
-			sq = !sq;
-		else if (line[i] == '"' && !sq)
-			dq = !dq;
-		else if (line[i] == ';' && !sq && !dq)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-static void handle_input(t_shell *shell, char *line, int interactive)
-{
-	t_token *tokens;
-	t_cmd *cmds;
 	int		semi;
 	char	*before;
 	char	*after;
@@ -136,76 +58,59 @@ static void handle_input(t_shell *shell, char *line, int interactive)
 	}
 	if (*line != '\0')
 		add_history(line);
-	tokens = lexer(line);
-	if (tokens == NULL)
-		return;
-	// print_tokens(tokens);
-	if (!syntax_check(tokens))
-	{
-		free_tokens(tokens);
-		shell->last_exit_status = 2;
-		if (!interactive)
-			shell->running = 0;
-		return;
-	}
-	cmds = parser(tokens);
-	if (cmds == NULL)
-	{
-		free_tokens(tokens);
-		shell->last_exit_status = 2;
-		if (!interactive)
-			shell->running = 0;
-		return;
-	}
-	// print_cmds(cmds);
-	expand_cmds(cmds, shell);
-	execute_cmds(cmds, shell);
-	free_tokens(tokens);
-	free_cmds(cmds);
-	// shell->last_exit_status = 0;
+	process_tokens(shell, line, interactive);
 }
 
-void run_shell(t_shell *shell)
+static char	*read_continuation(char *line)
+{
+	char	*cont;
+	char	*tmp;
+
+	cont = readline("> ");
+	if (cont == NULL)
+		return (line);
+	tmp = ft_strjoin(line, "\n");
+	free(line);
+	if (tmp == NULL)
+		return (free(cont), NULL);
+	line = ft_strjoin(tmp, cont);
+	free(tmp);
+	free(cont);
+	return (line);
+}
+
+static char	*read_interactive_line(void)
+{
+	char	*line;
+
+	line = readline("minishell$ ");
+	while (line != NULL && has_unclosed_quotes(line))
+	{
+		line = read_continuation(line);
+		if (line == NULL)
+			return (NULL);
+	}
+	return (line);
+}
+
+void	run_shell(t_shell *shell)
 {
 	char	*line;
 	int		interactive;
 
-	rl_catch_signals = 0;
 	interactive = isatty(STDIN_FILENO) && isatty(STDOUT_FILENO);
 	while (shell->running)
 	{
 		setup_signals();
 		if (interactive)
-		{
-			line = readline("minishell$ ");
-			while (line != NULL && has_unclosed_quotes(line))
-			{
-				char *cont;
-				char *tmp;
-				cont = readline("> ");
-				if (cont == NULL)
-					break ;
-				tmp = ft_strjoin(line, "\n");
-				free(line);
-				line = tmp;
-				if (line == NULL)
-				{
-					free(cont);
-					break ;
-				}
-				tmp = ft_strjoin(line, cont);
-				free(line);
-				free(cont);
-				line = tmp;
-			}
-		}
+			line = read_interactive_line();
 		else
 			line = read_non_interactive_line();
 		if (line == NULL)
 		{
 			if (interactive)
 				printf("exit\n");
-			break;
+			break ;
 		}
 		handle_input(shell, line, interactive);
 		free(line);
@@ -215,40 +120,85 @@ void run_shell(t_shell *shell)
 }
 
 /*
-void run_shell(t_shell *shell)
+old code
+
+#include "minishell.h"
+
+static char	*append_line(char *line, char *next)
+{
+	char	*with_newline;
+	char	*result;
+
+	with_newline = ft_strjoin(line, "\n");
+	free(line);
+	if (with_newline == NULL)
+		return (NULL);
+	result = ft_strjoin(with_newline, next);
+	free(with_newline);
+	return (result);
+}
+
+static void	handle_input(t_shell *shell, char *line, int interactive)
+{
+	t_token	*tokens;
+	t_cmd	*cmds;
+	char	*next;
+
+	while (has_unclosed_quote(line))
+	{
+		next = readline("> ");
+		if (next == NULL || g_signal_status == SIGINT)
+		{
+			free(next);
+			free(line);
+			return ;
+		}
+		line = append_line(line, next);
+		free(next);
+		if (line == NULL)
+			return ;
+	}
+	if (*line != '\0')
+		add_history(line);
+	tokens = lexer(line);
+	if (tokens == NULL)
+		return (free(line));
+	if (!syntax_check(tokens))
+	{
+		free_tokens(tokens);
+		free(line);
+		shell->last_exit_status = 2;
+		if (!interactive)
+			shell->running = 0;
+		return ;
+	}
+	cmds = parser(tokens);
+	free_tokens(tokens);
+	if (cmds == NULL)
+	{
+		free(line);
+		shell->last_exit_status = 2;
+		if (!interactive)
+			shell->running = 0;
+		return ;
+	}
+	expand_cmds(cmds, shell);
+	execute_cmds(cmds, shell);
+	free_cmds(cmds);
+	free(line);
+}
+
+void	run_shell(t_shell *shell)
 {
 	char	*line;
 	int		interactive;
 
-	rl_catch_signals = 0;
 	interactive = isatty(STDIN_FILENO) && isatty(STDOUT_FILENO);
 	while (shell->running)
 	{
 		setup_signals();
 		if (interactive)
-		{
 			line = readline("minishell$ ");
-			while (line != NULL && has_unclosed_quotes(line))
-			{
-				char *cont;
-				char *tmp;
-				cont = readline("> ");
-				if (cont == NULL)
-					break ;
-				tmp = ft_strjoin(line, "\n");
-				free(line);
-				line = tmp;
-				if (line == NULL)
-				{
-					free(cont);
-					break ;
-				}
-				tmp = ft_strjoin(line, cont);
-				free(line);
-				free(cont);
-				line = tmp;
-			}
-		}
 		else
 			line = read_non_interactive_line();
 		if (line == NULL)
@@ -258,7 +208,8 @@ void run_shell(t_shell *shell)
 			break;
 		}
 		handle_input(shell, line, interactive);
-		free(line);
 	}
+	free_split(shell->envp);
+	rl_clear_history();
 }
 */
