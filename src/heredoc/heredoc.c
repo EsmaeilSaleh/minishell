@@ -1,61 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: esaleh <esaleh@student.42berlin.de>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/28 00:00:00 by esaleh            #+#    #+#             */
+/*   Updated: 2026/05/28 00:00:00 by esaleh           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static char	*read_line_fd(int fd)
+static void	write_heredoc_line(int write_fd, char *line, int expand_body,
+	t_shell *shell)
 {
-	char	*line;
-	char	*tmp;
-	int		len;
-	int		cap;
-	char	c;
-	int		ret;
-	int		i;
+	char	*expanded;
 
-	cap = 64;
-	len = 0;
-	line = malloc(cap);
-	if (!line)
-		return (NULL);
-	while (1)
+	if (expand_body)
 	{
-		ret = read(fd, &c, 1);
-		if (ret <= 0)
-			break ;
-		if (c == '\n')
-			break ;
-		if (len + 1 >= cap)
+		expanded = expand_heredoc_body_line(line, shell);
+		if (expanded)
 		{
-			cap *= 2;
-			tmp = malloc(cap);
-			if (!tmp)
-			{
-				free(line);
-				return (NULL);
-			}
-			i = 0;
-			while (i < len)
-			{
-				tmp[i] = line[i];
-				i++;
-			}
-			free(line);
-			line = tmp;
+			write(write_fd, expanded, ft_strlen(expanded));
+			free(expanded);
 		}
-		line[len++] = c;
 	}
-	if (ret <= 0 && len == 0)
-	{
-		free(line);
-		return (NULL);
-	}
-	line[len] = '\0';
-	return (line);
+	else
+		write(write_fd, line, ft_strlen(line));
+	write(write_fd, "\n", 1);
 }
 
 static void	heredoc_child_loop(int write_fd, char *delimiter,
 	int expand_body, t_shell *shell)
 {
 	char	*line;
-	char	*expanded;
 
 	rl_catch_signals = 1;
 	set_signal_handler(SIGINT, SIG_DFL);
@@ -73,18 +52,7 @@ static void	heredoc_child_loop(int write_fd, char *delimiter,
 			free(line);
 			break ;
 		}
-		if (expand_body)
-		{
-			expanded = expand_heredoc_body_line(line, shell);
-			if (expanded)
-			{
-				write(write_fd, expanded, ft_strlen(expanded));
-				free(expanded);
-			}
-		}
-		else
-			write(write_fd, line, ft_strlen(line));
-		write(write_fd, "\n", 1);
+		write_heredoc_line(write_fd, line, expand_body, shell);
 		free(line);
 	}
 	close(write_fd);
@@ -118,7 +86,7 @@ static int	wait_heredoc_child(pid_t pid, int pipefd[2])
 	return (pipefd[0]);
 }
 
-int prepare_heredoc(char *delimiter, int expand_body, t_shell *shell)
+int	prepare_heredoc(char *delimiter, int expand_body, t_shell *shell)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -140,7 +108,7 @@ int prepare_heredoc(char *delimiter, int expand_body, t_shell *shell)
 	return (wait_heredoc_child(pid, pipefd));
 }
 
-int prepare_heredocs(t_cmd *cmds, t_shell *shell)
+int	prepare_heredocs(t_cmd *cmds, t_shell *shell)
 {
 	t_redir	*redir;
 

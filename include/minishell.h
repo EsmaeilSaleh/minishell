@@ -143,6 +143,7 @@ char *expand_heredoc_body_line(char *line, t_shell *shell);
 
 int prepare_heredocs(t_cmd *cmds, t_shell *shell);
 int prepare_heredoc(char *delimiter, int expand_body, t_shell *shell);
+char *read_line_fd(int fd);
 extern volatile sig_atomic_t g_signal_status;
 void setup_heredoc_signals(void);
 void sigint_handler(int signum);
