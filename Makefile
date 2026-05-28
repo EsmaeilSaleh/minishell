@@ -6,7 +6,7 @@
 #    By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/05/27 14:46:31 by dkpg-md-          #+#    #+#              #
-#    Updated: 2026/05/27 21:20:42 by dkpg-md-         ###   ########.fr        #
+#    Updated: 2026/05/28 19:25:06 by dkpg-md-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ SRCS = src/main.c \
        src/lexer/token_create.c \
        src/lexer/token_free.c \
        src/lexer/token_list.c \
+       src/utils/export_utils.c \
+       src/utils/run_shell_utils.c \
        src/utils/strings.c \
        src/utils/number_str.c \
        src/utils/join_split_str.c \
@@ -50,6 +52,7 @@ SRCS = src/main.c \
        src/builtins/env.c \
        src/builtins/exit.c \
        src/builtins/export.c \
+       src/builtins/export_display.c \
        src/builtins/pwd.c \
        src/builtins/unset.c \
        src/expand/expand.c \
