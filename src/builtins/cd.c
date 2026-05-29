@@ -50,7 +50,8 @@ static char	*get_cd_path(char **argv, t_shell *shell)
 		path = get_env_value(shell->envp, "OLDPWD");
 		if (!path)
 			return (write(2, "cd: OLDPWD not set\n", 19), NULL);
-		printf("%s\n", path);
+		write(1, path, ft_strlen(path));
+		write(1, "\n", 1);
 		return (path);
 	}
 	return (argv[1]);

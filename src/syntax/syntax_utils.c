@@ -28,6 +28,6 @@ int	is_redir_token(t_token *token)
 
 int	syntax_error(void)
 {
-	fprintf(stderr, "syntax error near unexpected token\n");
+	write(2, "syntax error near unexpected token\n", 35);
 	return (0);
 }

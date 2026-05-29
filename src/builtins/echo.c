@@ -42,12 +42,12 @@ int	ft_echo(char **argv)
 	}
 	while (argv[i])
 	{
-		printf("%s", argv[i]);
+		write(1, argv[i], ft_strlen(argv[i]));
 		if (argv[i + 1])
-			printf(" ");
+			write(1, " ", 1);
 		i++;
 	}
 	if (newline)
-		printf("\n");
+		write(1, "\n", 1);
 	return (0);
 }

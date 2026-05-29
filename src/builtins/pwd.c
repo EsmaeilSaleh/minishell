@@ -21,6 +21,7 @@ int	ft_pwd(void)
 		perror("pwd");
 		return (1);
 	}
-	printf("%s\n", buffer);
+	write(1, buffer, ft_strlen(buffer));
+	write(1, "\n", 1);
 	return (0);
 }

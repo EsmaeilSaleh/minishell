@@ -17,7 +17,6 @@ static int	fork_and_exec(t_cmd *cmd, t_shell *shell, char *path)
 	pid_t	pid;
 	int		status;
 
-	fflush(stdout);
 	set_signal_handler(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)

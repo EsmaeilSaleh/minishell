@@ -21,7 +21,8 @@ int	ft_env(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		printf("%s\n", envp[i]);
+		write(1, envp[i], ft_strlen(envp[i]));
+		write(1, "\n", 1);
 		i++;
 	}
 	return (0);
@@ -37,7 +38,7 @@ int	env_find_index(char **envp, char *key)
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], key, key_len) == 0
-			&& envp[i][key_len] == '=')
+			&& (envp[i][key_len] == '=' || envp[i][key_len] == '\0'))
 			return (i);
 		i++;
 	}

@@ -109,7 +109,7 @@ void	run_shell(t_shell *shell)
 		if (line == NULL)
 		{
 			if (interactive)
-				printf("exit\n");
+				write(1, "exit\n", 5);
 			break ;
 		}
 		handle_input(shell, line, interactive);

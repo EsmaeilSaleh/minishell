@@ -46,7 +46,6 @@ static int	fork_and_pipe(t_cmd *current, t_shell *shell, t_pipe_info *info)
 
 	if (current->next && pipe(info->pipefd) == -1)
 		return (-1);
-	fflush(stdout);
 	pid = fork();
 	if (pid < 0)
 		return (-1);
