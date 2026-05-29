@@ -103,11 +103,23 @@ static char	*read_interactive_line(void)
 	return (line);
 }
 
+static void	disable_echoctl(void)
+{
+	struct termios	term;
+
+	if (isatty(STDIN_FILENO) && tcgetattr(STDIN_FILENO, &term) == 0)
+	{
+		term.c_lflag &= ~ECHOCTL;
+		tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	}
+}
+
 void	run_shell(t_shell *shell)
 {
 	char	*line;
 	int		interactive;
 
+	disable_echoctl();
 	interactive = isatty(STDIN_FILENO) && isatty(STDOUT_FILENO);
 	while (shell->running)
 	{
