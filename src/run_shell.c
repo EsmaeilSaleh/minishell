@@ -67,6 +67,12 @@ static char	*read_continuation(char *line)
 	char	*tmp;
 
 	cont = readline("> ");
+	if (g_signal_status == SIGINT)
+	{
+		free(cont);
+		free(line);
+		return (NULL);
+	}
 	if (cont == NULL)
 		return (line);
 	tmp = ft_strjoin(line, "\n");
@@ -88,7 +94,11 @@ static char	*read_interactive_line(void)
 	{
 		line = read_continuation(line);
 		if (line == NULL)
+		{
+			if (g_signal_status == SIGINT)
+				return (ft_strdup(""));
 			return (NULL);
+		}
 	}
 	return (line);
 }
