@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_shell_utils.c                                  :+:      :+:    :+:   */
+/*   run_shell_read.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 00:17:23 by dkpg-md-          #+#    #+#             */
-/*   Updated: 2026/05/28 19:39:07 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/06/01 15:52:12 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,6 @@ int	find_semi_outside_quotes(char *line)
 	return (-1);
 }
 
-static char	*grow_buffer(char *line, int *capacity)
-{
-	char	*new_line;
-	int		i;
-
-	new_line = malloc(*capacity * 2);
-	if (new_line == NULL)
-		return (free(line), NULL);
-	i = 0;
-	while (i < *capacity)
-	{
-		new_line[i] = line[i];
-		i++;
-	}
-	free(line);
-	*capacity *= 2;
-	return (new_line);
-}
-
 void	process_tokens(t_shell *shell, char *line, int interactive)
 {
 	t_token	*tokens;
@@ -95,38 +76,4 @@ void	process_tokens(t_shell *shell, char *line, int interactive)
 	expand_cmds(cmds, shell);
 	execute_cmds(cmds, shell);
 	free_cmds(cmds);
-}
-
-char	*read_non_interactive_line(void)
-{
-	char	*line;
-	char	c;
-	int		len;
-	int		capacity;
-	int		bytes_read;
-
-	line = malloc(128);
-	if (!line)
-		return (NULL);
-	len = 0;
-	capacity = 128;
-	while (1)
-	{
-		bytes_read = read(STDIN_FILENO, &c, 1);
-		if (bytes_read <= 0)
-			break ;
-		if (c == '\n')
-			break ;
-		if (len + 1 >= capacity)
-		{
-			line = grow_buffer(line, &capacity);
-			if (!line)
-				return (NULL);
-		}
-		line[len++] = c;
-	}
-	if (len == 0)
-		return (free(line), NULL);
-	line[len] = '\0';
-	return (line);
 }
