@@ -96,8 +96,7 @@ char	*resolve_command_path(char *cmd_name, char **envp)
 		return (NULL);
 	path_value = get_env_value(envp, "PATH");
 	if (!path_value)
-		path_value = "/usr/local/sbin:/usr/local/bin:/usr/sbin"
-			":/usr/bin:/sbin:/bin";
+		return (NULL);
 	dirs = ft_split(path_value, ':');
 	if (!dirs)
 		return (NULL);
