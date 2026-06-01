@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   number_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esmaeil <esaleh@student.42.fr>            +#+  +:+       +#+        */
+/*   By: esaleh <esaleh@student.42berlin.de>        +#+  +:+       +#+         */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 00:00:00 by esmaeil           #+#    #+#             */
 /*   Updated: 2026/05/27 00:00:00 by esmaeil          ###   ########.fr       */
