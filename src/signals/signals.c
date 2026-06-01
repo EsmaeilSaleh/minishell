@@ -6,7 +6,7 @@
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 16:07:40 by dkpg-md-          #+#    #+#             */
-/*   Updated: 2026/06/01 15:27:48 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/06/01 15:43:32 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	setup_signals(void)
 	set_signal_handler(SIGQUIT, SIG_IGN);
 	if (tcgetattr(STDIN_FILENO, &term) == 0)
 	{
-	term.c_lflag |= ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+		term.c_lflag |= ECHOCTL;
+		tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	}
 }
