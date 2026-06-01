@@ -6,7 +6,7 @@
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 00:17:23 by dkpg-md-          #+#    #+#             */
-/*   Updated: 2026/06/01 00:00:00 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/06/01 16:28:24 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ void	run_shell(t_shell *shell)
 	interactive = isatty(STDIN_FILENO) && isatty(STDOUT_FILENO);
 	while (shell->running)
 	{
+		if (g_signal_status == SIGINT)
+			shell->last_exit_status = 130;
 		setup_signals();
 		if (interactive)
 			line = read_interactive_line();
