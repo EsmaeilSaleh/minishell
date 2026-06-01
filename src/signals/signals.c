@@ -6,7 +6,7 @@
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 16:07:40 by dkpg-md-          #+#    #+#             */
-/*   Updated: 2026/05/27 16:16:45 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/06/01 15:27:48 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,15 @@ void	heredoc_sigint_handler(int signum)
 
 void	setup_signals(void)
 {
+	struct termios	term;
+
 	g_signal_status = 0;
 	rl_event_hook = check_sigint;
 	set_signal_handler(SIGINT, sigint_handler);
 	set_signal_handler(SIGQUIT, SIG_IGN);
+	if (tcgetattr(STDIN_FILENO, &term) == 0)
+	{
+	term.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	}
 }
