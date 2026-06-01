@@ -6,7 +6,7 @@
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 00:19:17 by dkpg-md-          #+#    #+#             */
-/*   Updated: 2026/05/28 17:52:01 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/06/01 00:00:00 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,23 @@ int	ft_cd(char **argv, t_shell *shell)
 {
 	char	*path;
 	char	*old_pwd;
+	char	*abs_path;
 	char	buffer[1024];
 
 	old_pwd = get_env_value(shell->envp, "PWD");
 	path = get_cd_path(argv, shell);
 	if (path == NULL)
 		return (1);
-	if (chdir(path) != 0)
-		return (perror("cd"), 1);
+	abs_path = get_abs_path(path, old_pwd);
+	if (!abs_path)
+		return (1);
+	if (chdir(abs_path) != 0)
+	{
+		perror("cd");
+		free(abs_path);
+		return (1);
+	}
+	free(abs_path);
 	if (old_pwd)
 		update_env_var(shell, "OLDPWD", old_pwd);
 	if (getcwd(buffer, sizeof(buffer)))

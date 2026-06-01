@@ -143,6 +143,7 @@ int			is_builtin(char *cmd_name);
 int			exec_builtin(t_cmd *cmd, t_shell *shell);
 int			ft_echo(char **argv);
 int			ft_cd(char **argv, t_shell *shell);
+char		*get_abs_path(char *path, char *pwd);
 int			ft_pwd(t_shell *shell);
 int			ft_env(char **envp);
 int			ft_export(char **argv, t_shell *shell);
