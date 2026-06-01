@@ -6,7 +6,7 @@
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 00:17:23 by dkpg-md-          #+#    #+#             */
-/*   Updated: 2026/05/28 18:45:18 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/06/01 16:10:12 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int			prepare_heredocs(t_cmd *cmds, t_shell *shell);
 int			prepare_heredoc(char *delimiter, int expand_body, t_shell *shell);
 char		*read_line_fd(int fd);
 
-char	*read_non_interactive_line(void);
+char		*read_non_interactive_line(void);
 
 extern volatile sig_atomic_t	g_signal_status;
 
