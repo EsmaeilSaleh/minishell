@@ -39,7 +39,7 @@ int	exec_builtin(t_cmd *cmd, t_shell *shell)
 	if (ft_strcmp(cmd->argv[0], "cd") == 0)
 		return (ft_cd(cmd->argv, shell));
 	if (ft_strcmp(cmd->argv[0], "pwd") == 0)
-		return (ft_pwd());
+		return (ft_pwd(shell));
 	if (ft_strcmp(cmd->argv[0], "env") == 0)
 		return (ft_env(shell->envp));
 	if (ft_strcmp(cmd->argv[0], "exit") == 0)
