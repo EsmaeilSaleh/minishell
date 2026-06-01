@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   join_split_str.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: esmaeil <esmaeil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: esmaeil <esaleh@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 00:00:00 by esmaeil           #+#    #+#             */
 /*   Updated: 2026/05/27 00:00:00 by esmaeil          ###   ########.fr       */
