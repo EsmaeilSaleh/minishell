@@ -87,6 +87,7 @@ char		**ft_split(const char *s, char c);
 
 void		init_shell(t_shell *shell, char **envp);
 void		run_shell(t_shell *shell);
+void		process_tokens(t_shell *shell, char *line, int interactive);
 void		setup_signals(void);
 void		setup_heredoc_signals(void);
 void		sigint_handler(int signum);

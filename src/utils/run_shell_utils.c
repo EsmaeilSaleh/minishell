@@ -73,6 +73,30 @@ static char	*grow_buffer(char *line, int *capacity)
 	return (new_line);
 }
 
+void	process_tokens(t_shell *shell, char *line, int interactive)
+{
+	t_token	*tokens;
+	t_cmd	*cmds;
+
+	tokens = lexer(line);
+	if (!tokens)
+		return ;
+	cmds = NULL;
+	if (syntax_check(tokens))
+		cmds = parser(tokens);
+	free_tokens(tokens);
+	if (!cmds)
+	{
+		shell->last_exit_status = 2;
+		if (!interactive)
+			shell->running = 0;
+		return ;
+	}
+	expand_cmds(cmds, shell);
+	execute_cmds(cmds, shell);
+	free_cmds(cmds);
+}
+
 char	*read_non_interactive_line(void)
 {
 	char	*line;
