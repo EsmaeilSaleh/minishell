@@ -6,7 +6,7 @@
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 00:17:23 by dkpg-md-          #+#    #+#             */
-/*   Updated: 2026/06/01 16:10:12 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/06/02 12:19:21 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_pipe_info
 	int		pipefd[2];
 	int		has_next;
 	pid_t	last_pid;
+	t_cmd	*cmds_head;
 }	t_pipe_info;
 
 char		*ft_substr(const char *s, int start, int len);
@@ -166,6 +167,9 @@ int			prepare_heredoc(char *delimiter, int expand_body, t_shell *shell);
 char		*read_line_fd(int fd);
 
 char		*read_non_interactive_line(void);
+
+void		child_exit(t_cmd *cmds_head, t_shell *shell, int status);
+void		free_child(t_cmd *cmds, t_shell *shell);
 
 extern volatile sig_atomic_t	g_signal_status;
 
