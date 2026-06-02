@@ -6,7 +6,7 @@
 #    By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/05/27 14:46:31 by dkpg-md-          #+#    #+#              #
-#    Updated: 2026/06/01 15:53:30 by dkpg-md-         ###   ########.fr        #
+#    Updated: 2026/06/02 12:26:58 by dkpg-md-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,50 +20,52 @@ LIBS = -lreadline
 
 SRCS = src/main.c \
        src/run_shell.c \
+       src/builtins/builtins.c \
+       src/builtins/cd_path.c \
+       src/builtins/cd.c \
+       src/builtins/echo.c \
+       src/builtins/env.c \
+       src/builtins/exit.c \
+       src/builtins/export_display.c \
+       src/builtins/export.c \
+       src/builtins/pwd.c \
+       src/builtins/unset.c \
+       src/exec/exec_child.c \
+       src/exec/execute_pipeline.c \
+       src/exec/execute_single.c \
+       src/exec/execute.c \
+       src/exec/path_resolve.c \
+       src/exec/redir_apply.c \
+       src/expand/expand_args.c \
+       src/expand/expand_utils.c \
+       src/expand/expand_var.c \
+       src/expand/expand.c \
+       src/expand/quote_remove.c \
+       src/gc/cmd_free.c \
+       src/gc/exec_child_free.c \
+       src/gc/token_free.c \
+       src/heredoc/heredoc_utils.c \
+       src/heredoc/heredoc.c \
        src/init/init_shell.c \
-       src/signals/signals.c \
-       src/lexer/lexer_utils.c \
        src/lexer/lexer.c \
        src/lexer/token_create.c \
-       src/lexer/token_free.c \
        src/lexer/token_list.c \
-       src/utils/export_utils.c \
-       src/utils/run_shell_utils.c \
-       src/utils/run_shell_read.c \
-       src/utils/strings.c \
-       src/utils/number_str.c \
-       src/utils/join_split_str.c \
-       src/syntax/syntax_check.c \
-       src/syntax/syntax_utils.c \
-       src/parser/cmd_free.c \
        src/parser/cmd_list.c \
        src/parser/parse_cmd.c \
        src/parser/parse_redir.c \
        src/parser/parser.c \
-       src/exec/exec_child.c \
-       src/exec/execute_pipeline.c \
-       src/exec/execute.c \
-       src/exec/execute_single.c \
-       src/exec/execute_single_utils.c \
-       src/exec/path_resolve.c \
-       src/exec/redir_apply.c \
-       src/builtins/builtins.c \
-       src/builtins/cd.c \
-       src/builtins/cd_path.c \
-       src/builtins/echo.c \
-       src/builtins/env.c \
-       src/builtins/exit.c \
-       src/builtins/export.c \
-       src/builtins/export_display.c \
-       src/builtins/pwd.c \
-       src/builtins/unset.c \
-       src/expand/expand.c \
-       src/expand/expand_utils.c \
-       src/expand/expand_var.c \
-       src/expand/quote_remove.c \
-       src/expand/expand_args.c \
-       src/heredoc/heredoc_utils.c \
-       src/heredoc/heredoc.c
+       src/signals/signals_utils.c \
+       src/signals/signals.c \
+       src/syntax/syntax_check.c \
+       src/syntax/syntax_utils.c \
+       src/utils/execute_single_utils.c \
+       src/utils/export_utils.c \
+       src/utils/join_split_str.c \
+       src/utils/lexer_utils.c \
+       src/utils/number_str.c \
+       src/utils/run_shell_read.c \
+       src/utils/run_shell_utils.c \
+       src/utils/strings.c 
 
 OBJS = $(patsubst src/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 
