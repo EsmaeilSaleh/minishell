@@ -6,7 +6,7 @@
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 20:27:14 by dkpg-md-          #+#    #+#             */
-/*   Updated: 2026/06/01 15:42:42 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/06/02 12:06:39 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	execute_pipeline(t_cmd *cmds, t_shell *shell)
 	info.last_pid = -1;
 	current = cmds;
 	cmd_count = count_cmds(cmds);
+	info.cmds_head = cmds;
 	while (current)
 	{
 		if (fork_and_pipe(current, shell, &info) == -1)

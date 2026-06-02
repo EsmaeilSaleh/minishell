@@ -6,7 +6,7 @@
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 00:17:23 by dkpg-md-          #+#    #+#             */
-/*   Updated: 2026/05/28 18:26:51 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/06/02 12:17:30 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,33 +69,38 @@ static void	setup_child_fds(int prev_fd, int pipefd[2], int has_next)
 	}
 }
 
-static void	exec_cmd(t_cmd *cmd, t_shell *shell)
+static void	exec_cmd(t_cmd *cmd, t_shell *shell, t_cmd *head)
 {
 	char	*path;
 
 	if (cmd->argv == NULL || cmd->argv[0] == NULL)
-		exit(0);
+		child_exit(head, shell, 0);
+	if (is_builtin(cmd->argv[0]))
+		child_exit(head, shell, exec_builtin(cmd, shell));
 	if (is_builtin(cmd->argv[0])
 		&& !(ft_strcmp(cmd->argv[0], "env") == 0 && cmd->argv[1] != NULL))
-		exit(exec_builtin(cmd, shell));
+		child_exit(head, shell, exec_builtin(cmd, shell));
 	path = resolve_command_path(cmd->argv[0], shell->envp);
 	if (path == NULL)
 	{
 		write(2, "minishell: command not found: ", 30);
 		write(2, cmd->argv[0], ft_strlen(cmd->argv[0]));
 		write(2, "\n", 1);
-		exit(127);
+		child_exit(head, shell, 127);
 	}
 	set_underscore(shell, path);
 	execve(path, cmd->argv, shell->envp);
 	perror("execve");
-	exit(126);
+	child_exit(head, shell, 126);
 }
 
 void	exec_child_process(t_cmd *cmd, t_shell *shell, t_pipe_info *info)
 {
 	setup_child_fds(info->prev_fd, info->pipefd, info->has_next);
 	if (apply_redirs(cmd->redirs) != 0)
+	{
+		free_child(info->cmds_head, shell);
 		exit(1);
-	exec_cmd(cmd, shell);
+	}
+	exec_cmd(cmd, shell, info->cmds_head);
 }
