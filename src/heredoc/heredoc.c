@@ -12,10 +12,10 @@
 
 #include "minishell.h"
 
-static void	write_heredoc_line(int write_fd, char *line, int expand_body,
-	t_shell *shell)
+static void write_heredoc_line(int write_fd, char *line, int expand_body,
+							   t_shell *shell)
 {
-	char	*expanded;
+	char *expanded;
 
 	if (expand_body)
 	{
@@ -31,10 +31,10 @@ static void	write_heredoc_line(int write_fd, char *line, int expand_body,
 	write(write_fd, "\n", 1);
 }
 
-static void	heredoc_child_loop(int write_fd, char *delimiter,
-	int expand_body, t_shell *shell)
+static void heredoc_child_loop(int write_fd, char *delimiter,
+							   int expand_body, t_shell *shell)
 {
-	char	*line;
+	char *line;
 
 	rl_catch_signals = 1;
 	set_signal_handler(SIGINT, SIG_DFL);
@@ -46,11 +46,18 @@ static void	heredoc_child_loop(int write_fd, char *delimiter,
 		else
 			line = read_line_fd(STDIN_FILENO);
 		if (line == NULL)
-			break ;
+		{
+			ft_putstr_fd("bash: warning: here-document at line 1 delimited "
+						 "by end-of-file (wanted `",
+						 2);
+			ft_putstr_fd(delimiter, 2);
+			ft_putstr_fd("')\n", 2);
+			break;
+		}
 		if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
-			break ;
+			break;
 		}
 		write_heredoc_line(write_fd, line, expand_body, shell);
 		free(line);
@@ -59,9 +66,9 @@ static void	heredoc_child_loop(int write_fd, char *delimiter,
 	exit(0);
 }
 
-static int	wait_heredoc_child(pid_t pid, int pipefd[2])
+static int wait_heredoc_child(pid_t pid, int pipefd[2])
 {
-	int	status;
+	int status;
 
 	close(pipefd[1]);
 	set_signal_handler(SIGINT, SIG_IGN);
@@ -86,10 +93,10 @@ static int	wait_heredoc_child(pid_t pid, int pipefd[2])
 	return (pipefd[0]);
 }
 
-int	prepare_heredoc(char *delimiter, int expand_body, t_shell *shell)
+int prepare_heredoc(char *delimiter, int expand_body, t_shell *shell)
 {
-	int		pipefd[2];
-	pid_t	pid;
+	int pipefd[2];
+	pid_t pid;
 
 	if (pipe(pipefd) == -1)
 		return (-1);
@@ -108,10 +115,10 @@ int	prepare_heredoc(char *delimiter, int expand_body, t_shell *shell)
 	return (wait_heredoc_child(pid, pipefd));
 }
 
-int	prepare_heredocs(t_cmd *cmds, t_shell *shell)
+int prepare_heredocs(t_cmd *cmds, t_shell *shell)
 {
-	int		ret;
-	t_cmd	*head;
+	int ret;
+	t_cmd *head;
 
 	head = cmds;
 	while (cmds)
