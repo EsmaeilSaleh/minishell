@@ -32,28 +32,6 @@ int	has_unclosed_quotes(char *line)
 	return (single_quote || double_quote);
 }
 
-int	find_semi_outside_quotes(char *line)
-{
-	int	i;
-	int	sq;
-	int	dq;
-
-	i = 0;
-	sq = 0;
-	dq = 0;
-	while (line[i])
-	{
-		if (line[i] == '\'' && !dq)
-			sq = !sq;
-		else if (line[i] == '"' && !sq)
-			dq = !dq;
-		else if (line[i] == ';' && !sq && !dq)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
 void	process_tokens(t_shell *shell, char *line, int interactive)
 {
 	t_token	*tokens;

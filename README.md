@@ -17,7 +17,6 @@ The project covers a wide range of systems programming topics: process creation 
 - Environment variable expansion (`$VAR`, `$?`)
 - Pipelines (`cmd1 | cmd2 | cmd3`)
 - Redirections: `<`, `>`, `>>`, `<<` (heredoc)
-- Semicolon-separated commands (`cmd1 ; cmd2`)
 - Multi-line input with unclosed quotes (continuation prompt `>`)
 - Signal handling: `Ctrl+C`, `Ctrl+D`, `Ctrl+\`
 - Built-in commands: `echo`, `cd`, `pwd`, `export`, `unset`, `env`, `exit`

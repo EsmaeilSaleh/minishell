@@ -108,7 +108,6 @@ int			is_space(char c);
 int			is_operator_char(char c);
 char		*extract_word(char *line, int *i);
 int			has_unclosed_quotes(char *line);
-int			find_semi_outside_quotes(char *line);
 
 int			is_pipe_token(t_token *token);
 int			is_redir_token(t_token *token);

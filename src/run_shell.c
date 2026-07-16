@@ -14,25 +14,6 @@
 
 static void	handle_input(t_shell *shell, char *line, int interactive)
 {
-	int		semi;
-	char	*before;
-	char	*after;
-
-	semi = find_semi_outside_quotes(line);
-	if (semi != -1)
-	{
-		before = ft_substr(line, 0, semi);
-		after = ft_strdup(line + semi + 1);
-		if (before)
-		{
-			handle_input(shell, before, interactive);
-			free(before);
-		}
-		if (after && shell->running)
-			handle_input(shell, after, interactive);
-		free(after);
-		return ;
-	}
 	if (*line != '\0')
 		add_history(line);
 	process_tokens(shell, line, interactive);
