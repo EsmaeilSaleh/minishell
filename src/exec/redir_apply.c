@@ -6,7 +6,7 @@
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 00:17:23 by dkpg-md-          #+#    #+#             */
-/*   Updated: 2026/05/27 18:02:58 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/07/16 10:24:16 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@ void	restore_stdio(int stdin_backup, int stdout_backup)
 	dup2(stdout_backup, STDOUT_FILENO);
 	close(stdin_backup);
 	close(stdout_backup);
+}
+
+static void	redir_error(char *target)
+{
+	write(2, "minishell: ", 11);
+	write(2, target, ft_strlen(target));
+	write(2, ": ", 2);
+	write(2, strerror(errno), ft_strlen(strerror(errno)));
+	write(2, "\n", 1);
 }
 
 static int	open_redir_file(t_redir *redir)
@@ -41,7 +50,7 @@ int	apply_redirs(t_redir *redirs)
 	{
 		file_fd = open_redir_file(redirs);
 		if (file_fd < 0)
-			return (perror("redir"), 1);
+			return (redir_error(redirs->target), 1);
 		if (dup2(file_fd, redirs->fd) < 0)
 		{
 			perror("dup2");

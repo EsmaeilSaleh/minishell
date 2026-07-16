@@ -59,3 +59,44 @@ char	*read_line_fd(int fd)
 	line[len] = '\0';
 	return (line);
 }
+
+void	close_heredoc_fds(t_cmd *cmds)
+{
+	t_redir	*redir;
+
+	while (cmds)
+	{
+		redir = cmds->redirs;
+		while (redir)
+		{
+			if (redir->type == TOK_HEREDOC && redir->heredoc_fd >= 0)
+			{
+				close(redir->heredoc_fd);
+				redir->heredoc_fd = -1;
+			}
+			redir = redir->next;
+		}
+		cmds = cmds->next;
+	}
+}
+
+int	process_redirs(t_redir *redir, t_cmd *head, t_shell *shell)
+{
+	while (redir)
+	{
+		if (redir->type == TOK_HEREDOC)
+		{
+			redir->heredoc_fd = prepare_heredoc(redir->target,
+					redir->expand_body, shell);
+			if (redir->heredoc_fd < 0)
+			{
+				close_heredoc_fds(head);
+				if (g_signal_status == SIGINT)
+					return (130);
+				return (1);
+			}
+		}
+		redir = redir->next;
+	}
+	return (0);
+}

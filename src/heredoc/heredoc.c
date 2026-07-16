@@ -110,26 +110,15 @@ int	prepare_heredoc(char *delimiter, int expand_body, t_shell *shell)
 
 int	prepare_heredocs(t_cmd *cmds, t_shell *shell)
 {
-	t_redir	*redir;
+	int		ret;
+	t_cmd	*head;
 
+	head = cmds;
 	while (cmds)
 	{
-		redir = cmds->redirs;
-		while (redir)
-		{
-			if (redir->type == TOK_HEREDOC)
-			{
-				redir->heredoc_fd = prepare_heredoc(redir->target,
-						redir->expand_body, shell);
-				if (redir->heredoc_fd < 0)
-				{
-					if (g_signal_status == SIGINT)
-						return (130);
-					return (1);
-				}
-			}
-			redir = redir->next;
-		}
+		ret = process_redirs(cmds->redirs, head, shell);
+		if (ret != 0)
+			return (ret);
 		cmds = cmds->next;
 	}
 	return (0);

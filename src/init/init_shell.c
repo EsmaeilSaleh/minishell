@@ -6,7 +6,7 @@
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 00:00:00 by esmaeil           #+#    #+#             */
-/*   Updated: 2026/06/01 15:44:04 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/07/16 10:14:15 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	init_shell(t_shell *shell, char **envp)
 	idx = env_find_index(shell->envp, "OLDPWD");
 	if (idx == -1 || shell->envp[idx][6] == '=')
 	{
-		entry = ft_strdup("OLDPWD");
+		entry = ft_strdup("OLDPWD=");
 		if (!entry)
 			return ;
 		set_env_entry(shell, entry, "OLDPWD");

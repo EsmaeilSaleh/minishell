@@ -6,7 +6,7 @@
 /*   By: dkpg-md- <dkpg-md-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 00:17:23 by dkpg-md-          #+#    #+#             */
-/*   Updated: 2026/06/02 12:19:21 by dkpg-md-         ###   ########.fr       */
+/*   Updated: 2026/07/16 10:20:31 by dkpg-md-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,10 +162,12 @@ int			has_append_syntax(char *arg, int eq_index);
 int			print_export_no_args(t_shell *shell);
 
 void		expand_cmds(t_cmd *cmds, t_shell *shell);
+void		close_heredoc_fds(t_cmd *cmds);
 char		*expand_one_word(char *word, t_shell *shell);
 char		*expand_heredoc_body_line(char *line, t_shell *shell);
 int			prepare_heredocs(t_cmd *cmds, t_shell *shell);
 int			prepare_heredoc(char *delimiter, int expand_body, t_shell *shell);
+int			process_redirs(t_redir *redir, t_cmd *head, t_shell *shell);
 char		*read_line_fd(int fd);
 
 char		*read_non_interactive_line(void);
