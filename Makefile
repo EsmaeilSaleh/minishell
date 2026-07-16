@@ -46,6 +46,7 @@ SRCS = src/main.c \
        src/gc/token_free.c \
        src/heredoc/heredoc_utils.c \
        src/heredoc/heredoc.c \
+       src/heredoc/heredoc_warn.c \
        src/init/init_shell.c \
        src/lexer/lexer.c \
        src/lexer/token_create.c \

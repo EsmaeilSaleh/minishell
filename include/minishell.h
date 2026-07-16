@@ -170,6 +170,8 @@ int			prepare_heredocs(t_cmd *cmds, t_shell *shell);
 int			prepare_heredoc(char *delimiter, int expand_body, t_shell *shell);
 int			process_redirs(t_redir *redir, t_cmd *head, t_shell *shell);
 char		*read_line_fd(int fd);
+char		*heredoc_next_line(void);
+void		print_heredoc_eof_warning(char *delimiter);
 
 char		*read_non_interactive_line(void);
 

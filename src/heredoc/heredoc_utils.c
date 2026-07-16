@@ -60,6 +60,13 @@ char	*read_line_fd(int fd)
 	return (line);
 }
 
+char	*heredoc_next_line(void)
+{
+	if (isatty(STDIN_FILENO))
+		return (readline("> "));
+	return (read_line_fd(STDIN_FILENO));
+}
+
 void	close_heredoc_fds(t_cmd *cmds)
 {
 	t_redir	*redir;
