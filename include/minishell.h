@@ -91,9 +91,11 @@ void		run_shell(t_shell *shell);
 void		process_tokens(t_shell *shell, char *line, int interactive);
 void		setup_signals(void);
 void		setup_heredoc_signals(void);
+void		setup_child_signals(void);
 void		sigint_handler(int signum);
 void		heredoc_sigint_handler(int signum);
 void		set_signal_handler(int signo, void (*handler)(int));
+void		report_signal_exit(int status);
 
 t_token		*lexer(char *line);
 void		print_tokens(t_token *tokens);

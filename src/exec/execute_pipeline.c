@@ -35,8 +35,7 @@ static void	update_last_status(pid_t waited, pid_t last,
 	else if (WIFSIGNALED(status))
 	{
 		shell->last_exit_status = 128 + WTERMSIG(status);
-		if (WTERMSIG(status) == SIGINT)
-			write(1, "\n", 1);
+		report_signal_exit(status);
 	}
 }
 

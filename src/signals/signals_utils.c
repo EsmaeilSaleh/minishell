@@ -25,3 +25,18 @@ void	setup_child_signals(void)
 	set_signal_handler(SIGINT, SIG_DFL);
 	set_signal_handler(SIGQUIT, SIG_DFL);
 }
+
+void	report_signal_exit(int status)
+{
+	if (!WIFSIGNALED(status))
+		return ;
+	if (WTERMSIG(status) == SIGINT)
+		write(1, "\n", 1);
+	else if (WTERMSIG(status) == SIGQUIT)
+	{
+		write(2, "Quit", 4);
+		if (WCOREDUMP(status))
+			write(2, " (core dumped)", 14);
+		write(2, "\n", 1);
+	}
+}

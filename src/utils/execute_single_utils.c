@@ -66,8 +66,7 @@ int	handle_parent(int status, t_shell *shell)
 	else if (WIFSIGNALED(status))
 	{
 		shell->last_exit_status = 128 + WTERMSIG(status);
-		if (WTERMSIG(status) == SIGINT)
-			write(1, "\n", 1);
+		report_signal_exit(status);
 	}
 	return (shell->last_exit_status);
 }

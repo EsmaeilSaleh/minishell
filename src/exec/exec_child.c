@@ -75,8 +75,6 @@ static void	exec_cmd(t_cmd *cmd, t_shell *shell, t_cmd *head)
 
 	if (cmd->argv == NULL || cmd->argv[0] == NULL)
 		child_exit(head, shell, 0);
-	if (is_builtin(cmd->argv[0]))
-		child_exit(head, shell, exec_builtin(cmd, shell));
 	if (is_builtin(cmd->argv[0])
 		&& !(ft_strcmp(cmd->argv[0], "env") == 0 && cmd->argv[1] != NULL))
 		child_exit(head, shell, exec_builtin(cmd, shell));
@@ -96,6 +94,7 @@ static void	exec_cmd(t_cmd *cmd, t_shell *shell, t_cmd *head)
 
 void	exec_child_process(t_cmd *cmd, t_shell *shell, t_pipe_info *info)
 {
+	setup_child_signals();
 	setup_child_fds(info->prev_fd, info->pipefd, info->has_next);
 	if (apply_redirs(cmd->redirs) != 0)
 	{
